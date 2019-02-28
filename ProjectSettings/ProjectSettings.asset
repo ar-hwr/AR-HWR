@@ -385,6 +385,11 @@ PlayerSettings:
     m_Enabled: 1
     m_Devices:
     - Vuforia
+  - m_BuildTarget: Metro
+    m_Enabled: 1
+    m_Devices:
+    - WindowsMR
+    - Vuforia
   m_BuildTargetEnableVuforiaSettings:
   - m_BuildTarget: Android
     m_Enabled: 1
@@ -642,7 +647,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0041442395ead501
   metroApplicationDescription: Template_3D
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: MobileAnwendung
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
