@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="Mauerpark" size="0.060000 0.032793" />
+    <ImageTarget name="KaDeWe" size="0.070000 0.034160" />
+    <ImageTarget name="Tiergarten" size="0.080000 0.050141" />
+    <ImageTarget name="Spreeufer" size="0.070000 0.041832" />
+    <ImageTarget name="Alexanderplatz" size="0.070000 0.043160" />
+    <ImageTarget name="herz_koenig" size="0.060000 0.085055" />
+    <ImageTarget name="kreuz_2" size="0.060000 0.085304" />
     <ImageTarget name="joker" size="0.060000 0.083747" />
     <ImageTarget name="pik_bube" size="0.060000 0.084517" />
     <ImageTarget name="karo_koenig" size="0.060000 0.087135" />
