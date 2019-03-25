@@ -380,14 +380,13 @@ PlayerSettings:
   - m_BuildTarget: Standalone
     m_Enabled: 1
     m_Devices:
-    - Oculus
-    - OpenVR
+    - Vuforia
   - m_BuildTarget: Android
     m_Enabled: 1
     m_Devices:
     - Vuforia
   - m_BuildTarget: Metro
-    m_Enabled: 1
+    m_Enabled: 0
     m_Devices:
     - WindowsMR
   m_BuildTargetEnableVuforiaSettings:
@@ -677,7 +676,7 @@ PlayerSettings:
       HumanInterfaceDevice: False
       InputInjectionBrokered: False
       InternetClient: True
-      InternetClientServer: False
+      InternetClientServer: True
       Location: False
       LowLevelDevices: False
       Microphone: False
@@ -688,7 +687,7 @@ PlayerSettings:
       PhoneCallHistoryPublic: False
       PicturesLibrary: False
       PointOfService: False
-      PrivateNetworkClientServer: False
+      PrivateNetworkClientServer: True
       Proximity: False
       RecordedCallsFolder: False
       RemoteSystem: False
