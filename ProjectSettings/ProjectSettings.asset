@@ -764,10 +764,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: ecbed24a-d6a9-482b-9a0d-be4b51309501
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: MobileAnwendung
+  organizationId: jessakraft
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
