@@ -6,14 +6,11 @@ using UnityEngine.UI;
 
 public class TakeVehicle : NetworkBehaviour
 {
-
-    [SyncVar]
+    [SyncVar(hook = "OnSubwayChange")]
     public int subwayMoves = 4;
 
-    [SyncVar]
     public int bikeMoves = 4;
 
-    [SyncVar]
     public int busMoves = 4;
 
     public Text subwayInfo;
@@ -35,8 +32,11 @@ public class TakeVehicle : NetworkBehaviour
 
     public void ClientTakeSubway()
     {
-        subwayMoves--;
-        subwayInfo.text = subwayMoves.ToString();
+        if (isServer)
+            RpcDecrementSubwayMoves(1);
+
+        if (isLocalPlayer)
+            CmdDecrementSubwayMoves(1);
     }
 
     public void ClientTakeBus()
@@ -49,6 +49,23 @@ public class TakeVehicle : NetworkBehaviour
     {
         bikeMoves--;
         bikeInfo.text = bikeMoves.ToString();
+    }
+
+    [Command]
+    public void CmdDecrementSubwayMoves(int number)
+    {
+        subwayMoves -= number;
+    }
+
+    [ClientRpc]
+    public void RpcDecrementSubwayMoves(int number)
+    {
+        subwayMoves -= number;
+    }
+
+    void OnSubwayChange(int number)
+    {
+        subwayInfo.text = number.ToString();
     }
 
 }
