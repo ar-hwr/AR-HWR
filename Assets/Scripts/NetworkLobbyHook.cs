@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using UnityEngine;
 using UnityEngine.Networking;
 using Prototype.NetworkLobby;
+using UnityEngine.UI;
 
 public class NetworkLobbyHook : LobbyHook
 {

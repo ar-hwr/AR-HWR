@@ -976,7 +976,7 @@ GameObject:
   - component: {fileID: 1572114083786606024}
   - component: {fileID: 1572114083786606034}
   - component: {fileID: 1572114083786606022}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: RoundsLeftInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1055,7 +1055,7 @@ GameObject:
   - component: {fileID: 1572114083786606025}
   - component: {fileID: 1572114083786606035}
   - component: {fileID: 1572114083786606023}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: NameInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1069,7 +1069,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572114083786605861}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1078,7 +1078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 221, y: -44}
+  m_AnchoredPosition: {x: 230, y: -45}
   m_SizeDelta: {x: 288, y: 24}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1572114083786606035
@@ -1134,7 +1134,7 @@ GameObject:
   - component: {fileID: 1572114083786606028}
   - component: {fileID: 1572114083786606038}
   - component: {fileID: 1572114083786606074}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: 'RoundsLeft:'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,9 +1213,8 @@ GameObject:
   - component: {fileID: 1572114083786606029}
   - component: {fileID: 1572114083786606039}
   - component: {fileID: 1572114083786606075}
-  - component: {fileID: 1572114083786606072}
-  m_Layer: 5
-  m_Name: TopPanel
+  m_Layer: 0
+  m_Name: HeadingSubPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1284,19 +1283,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &1572114083786606072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1572114083786606041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 763992d85d3f6d4428454c2a968ce084, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isInGame: 0
 --- !u!1 &1572114083786606042
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,7 +1294,7 @@ GameObject:
   - component: {fileID: 1572114083786606030}
   - component: {fileID: 1572114083786606032}
   - component: {fileID: 1572114083786606020}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: 'Name:'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1387,7 +1373,7 @@ GameObject:
   - component: {fileID: 1572114083786606031}
   - component: {fileID: 1572114083786606033}
   - component: {fileID: 1572114083786606021}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlayersMoves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1466,7 +1452,7 @@ GameObject:
   - component: {fileID: 1572114083786606016}
   - component: {fileID: 1572114083786606026}
   - component: {fileID: 1572114083786606065}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: AllPlayers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1546,7 +1532,7 @@ GameObject:
   - component: {fileID: 1572114083786606036}
   - component: {fileID: 1572114083786606079}
   - component: {fileID: 1572114083786606076}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1674,7 +1660,7 @@ GameObject:
   - component: {fileID: 1572114083786606019}
   - component: {fileID: 1572114083786606037}
   - component: {fileID: 1572114083786606077}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1869,6 +1855,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3765824917236471120}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &2566835077533487290
@@ -1962,7 +1959,7 @@ GameObject:
   - component: {fileID: 7020371598162573733}
   - component: {fileID: 4426604471446103398}
   - component: {fileID: 521738994835616139}
-  - component: {fileID: 7932640861525390666}
+  - component: {fileID: 8838238573763634447}
   m_Layer: 5
   m_Name: SpawnablePlayer 1
   m_TagString: Player
@@ -2107,7 +2104,7 @@ MonoBehaviour:
   takeBusButton: {fileID: 1263774353260427287}
   bikeInfo: {fileID: 182215908880606512}
   takeBikeButton: {fileID: 182215909250914004}
---- !u!114 &7932640861525390666
+--- !u!114 &8838238573763634447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
