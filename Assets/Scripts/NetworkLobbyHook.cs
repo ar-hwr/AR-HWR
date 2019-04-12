@@ -16,6 +16,10 @@ public class NetworkLobbyHook : LobbyHook
         SetupLocalPlayer localPlayer = gamePlayer.GetComponent<SetupLocalPlayer>();
 
         localPlayer.pName = lobby.playerName;
+        //localPlayer.players = localPlayer.players + " " + lobby.playerName;
+        //Debug.Log(localPlayer.players);
+        SetupLocalPlayer.players += lobby.playerName;
+        Debug.Log("Players is " + SetupLocalPlayer.players);
     }
 }
 

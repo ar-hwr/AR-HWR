@@ -11,16 +11,21 @@ public class SetupLocalPlayer : NetworkBehaviour
     public string pName;
 
     //[SyncVar(hook = "OnChangePlayerList")]
-    public string players;
+    //[SyncVar]
+    public static string players;
 
     public Text NameInfo;
     public Text AllPlayers;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
+        AllPlayers = GameObject.Find("Players").GetComponent<Text>();
         Debug.Log(pName);
         NameInfo.text = pName;
+        AllPlayers.text = players;
 
         //OnChangePlayerName(pName);
 

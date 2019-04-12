@@ -1219,7 +1219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1572114083786606029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2119,7 +2119,8 @@ MonoBehaviour:
   pName: 
   players: 
   NameInfo: {fileID: 1572114083786606023}
-  AllPlayers: {fileID: 1572114083786606065}
+  AllPlayers: {fileID: 4410565082388289052, guid: c660d7d03d5ed5e408f2f578f90e21b1,
+    type: 3}
 --- !u!1 &6048356545661704155
 GameObject:
   m_ObjectHideFlags: 0
