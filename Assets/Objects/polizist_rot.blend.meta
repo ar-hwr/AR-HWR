@@ -11,7 +11,12 @@ ModelImporter:
     4300000: Sphere
     7400000: Default Take
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material__police_red_png
+    second: {fileID: 2100000, guid: 4ac5414083ae7ef4883cb2bfda35c562, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
