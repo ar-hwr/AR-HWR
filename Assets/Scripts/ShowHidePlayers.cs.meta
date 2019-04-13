@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 619da496da957474498318d7f98837df
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Thief: {fileID: 100000, guid: 7aebece9e0d45784785a5b12ee7ed670, type: 3}
+  - PoliceBlue: {fileID: 100000, guid: 906740cc8f8db3a4d9b9632e8a1a2e0d, type: 3}
+  - PoliceGreen: {fileID: 100000, guid: c8232b3025c3bbf47ad82060f707945b, type: 3}
+  - PoliceRed: {fileID: 100000, guid: dd831daafff8ea249a7f02f5fd7835cd, type: 3}
+  - PoliceYellow: {fileID: 100000, guid: bbb877857a36f2944b7abef2caf46eb9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

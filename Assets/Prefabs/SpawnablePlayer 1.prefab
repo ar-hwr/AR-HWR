@@ -175,7 +175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &182215908283503274
 RectTransform:
   m_ObjectHideFlags: 0
@@ -668,7 +668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1263774353602284815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1219,7 +1219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1572114083786606029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1885,7 +1885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7949928905076414676
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2116,11 +2116,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd541845cad4c438d856817e3ced3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Thief: {fileID: 100000, guid: 7aebece9e0d45784785a5b12ee7ed670, type: 3}
+  PoliceBlue: {fileID: 100000, guid: 906740cc8f8db3a4d9b9632e8a1a2e0d, type: 3}
+  PoliceGreen: {fileID: 100000, guid: c8232b3025c3bbf47ad82060f707945b, type: 3}
+  PoliceRed: {fileID: 100000, guid: dd831daafff8ea249a7f02f5fd7835cd, type: 3}
+  PoliceYellow: {fileID: 100000, guid: bbb877857a36f2944b7abef2caf46eb9, type: 3}
   pName: 
-  players: 
+  pColor: {r: 0, g: 0, b: 0, a: 0}
   NameInfo: {fileID: 1572114083786606023}
-  AllPlayers: {fileID: 4410565082388289052, guid: c660d7d03d5ed5e408f2f578f90e21b1,
-    type: 3}
 --- !u!1 &6048356545661704155
 GameObject:
   m_ObjectHideFlags: 0
