@@ -9,12 +9,11 @@ public class SetupLocalPlayer : NetworkBehaviour
 {
 
     //player prefabs are assigned in unity editor
-    public GameObject Thief;
-    public GameObject PoliceBlue;
-    public GameObject PoliceGreen;
-    public GameObject PoliceRed;
-    public GameObject PoliceYellow;
-
+    public GameObject Jungfernheide;
+    public GameObject JakobKaiserPlatz;
+    public GameObject SchlossCharlottenburg;
+    public GameObject Schlossbruecke;
+    public GameObject FlughafenTegel;
 
     [SyncVar]
     public string pName;
@@ -36,13 +35,63 @@ public class SetupLocalPlayer : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (var player in pPositions)
+        {
+            if (player.Key == pName)
+            {
+                ShowHidePlayers showHide = new ShowHidePlayers();
+                switch (player.Value)
+                {
+                    case "Jungfernheide":
+                        showHide.RenderPlayer(pColor,
+                            thief: GameObject.Find(Jungfernheide.name + "/thief"),
+                            policeBlue: GameObject.Find(Jungfernheide.name + "/police blue"),
+                            policeGreen: GameObject.Find(Jungfernheide.name + "/police green"),
+                            policeRed: GameObject.Find(Jungfernheide.name + "/police red"),
+                            policeYellow: GameObject.Find(Jungfernheide.name + "/police yellow"));
+                        break;
+                    case "JakobKaiserPlatz":
+                        showHide.RenderPlayer(pColor,
+                            thief: GameObject.Find(JakobKaiserPlatz.name + "/thief"),
+                            policeBlue: GameObject.Find(JakobKaiserPlatz.name + "/police blue"),
+                            policeGreen: GameObject.Find(JakobKaiserPlatz.name + "/police green"),
+                            policeRed: GameObject.Find(JakobKaiserPlatz.name + "/police red"),
+                            policeYellow: GameObject.Find(JakobKaiserPlatz.name + "/police yellow"));
+                        break;
 
-        ShowHidePlayers showHide = new ShowHidePlayers();
-        showHide.RenderPlayer(pColor, thief: Thief, policeBlue: PoliceBlue, policeGreen: PoliceGreen, policeRed: PoliceRed, policeYellow: PoliceYellow);
+                    case "SchlossCharlottenburg":
+                        showHide.RenderPlayer(pColor,
+                            thief: GameObject.Find(SchlossCharlottenburg.name + "/thief"),
+                            policeBlue: GameObject.Find(SchlossCharlottenburg.name + "/police blue"),
+                            policeGreen: GameObject.Find(SchlossCharlottenburg.name + "/police green"),
+                            policeRed: GameObject.Find(SchlossCharlottenburg.name + "/police red"),
+                            policeYellow: GameObject.Find(SchlossCharlottenburg.name + "/police yellow"));
+                        break;
+
+                    case "Schlossbruecke":
+                        showHide.RenderPlayer(pColor,
+                            thief: GameObject.Find(Schlossbruecke.name + "/thief"),
+                            policeBlue: GameObject.Find(Schlossbruecke.name + "/police blue"),
+                            policeGreen: GameObject.Find(Schlossbruecke.name + "/police green"),
+                            policeRed: GameObject.Find(Schlossbruecke.name + "/police red"),
+                            policeYellow: GameObject.Find(Schlossbruecke.name + "/police yellow"));
+                        break;
+                    case "FlughafenTegel":
+                        showHide.RenderPlayer(pColor,
+                            thief: GameObject.Find(FlughafenTegel.name + "/thief"),
+                            policeBlue: GameObject.Find(FlughafenTegel.name + "/police blue"),
+                            policeGreen: GameObject.Find(FlughafenTegel.name + "/police green"),
+                            policeRed: GameObject.Find(FlughafenTegel.name + "/police red"),
+                            policeYellow: GameObject.Find(FlughafenTegel.name + "/police yellow"));
+                        break;                     
+                    default: break;
+                }                       
+            }
+        }
 
         //AllPlayers = GameObject.Find("Players").GetComponent<Text>();
         Debug.Log(pName);
-        NameInfo.text = pName;
+        //NameInfo.text = pName;
         //AllPlayers.text = players;
 
         foreach (var pos in pPositions)

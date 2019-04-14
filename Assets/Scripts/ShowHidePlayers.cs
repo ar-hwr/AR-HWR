@@ -60,20 +60,32 @@ public class ShowHidePlayers : MonoBehaviour
                 break;
         }
 
-
-
-        foreach (var pb in PlayerBools)
+        foreach (var gameObject in PlayerBools)
         {
-            var renderer = pb.Key.GetComponent<Renderer>();
-            if (pb.Value)
+            if (gameObject.Value)
             {
-                renderer.enabled = true;
-                Debug.Log("rendering player " + player.name);
+                gameObject.Key.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
             }
             else
             {
-                renderer.enabled = false;
+                gameObject.Key.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
             }
         }
+
+
+
+        //foreach (var pb in PlayerBools)
+        //{
+        //    var renderer = pb.Key.GetComponent<Renderer>();
+        //    if (pb.Value)
+        //    {
+        //        renderer.enabled = true;
+        //        Debug.Log("rendering player " + player.name);
+        //    }
+        //    else
+        //    {
+        //        renderer.enabled = false;
+        //    }
+        //}
     }
 }

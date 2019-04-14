@@ -13,7 +13,7 @@ public class NetworkLobbyHook : LobbyHook
         "JakobKaiserPlatz",
         "SchlossCharlottenburg",
         "Schlossbruecke",
-        "Flughafen Tegel"
+        "FlughafenTegel"
     };
 
 
@@ -34,6 +34,7 @@ public class NetworkLobbyHook : LobbyHook
         Random random = new Random();
         int index = random.Next(0, 4);
         SetupLocalPlayer.pPositions.Add(lobby.playerName, Stations[index]);
+        Debug.Log("Station is " + Stations[index]);
 
     }
 }
