@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using HoloToolkit.Unity;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class SetupLocalPlayer : NetworkBehaviour
 {
-
     //player prefabs are assigned in unity editor
     public GameObject Jungfernheide;
     public GameObject JakobKaiserPlatz;
@@ -35,6 +35,12 @@ public class SetupLocalPlayer : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Jungfernheide = GameObject.Find("Jungfernheide");
+        JakobKaiserPlatz = GameObject.Find("Jakob Kaiser Platz");
+        SchlossCharlottenburg = GameObject.Find("Schloss Charlottenburg");
+        Schlossbruecke = GameObject.Find("Schlossbruecke");
+        FlughafenTegel = GameObject.Find("Flughafen Tegel");
+
         foreach (var player in pPositions)
         {
             if (player.Key == pName)
