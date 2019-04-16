@@ -41,102 +41,128 @@ public class SetupLocalPlayer : NetworkBehaviour
         Schlossbruecke = GameObject.Find("Schlossbruecke");
         FlughafenTegel = GameObject.Find("Flughafen Tegel");
 
-        //instantiate ShowHideScript only if data about players and positions is available
-        if (pPositions.Count != 0)
-        {
-            showHide = new ShowHidePlayers();
-            showHide.HidePlayersByDefault(
-                thief: GameObject.Find(Jungfernheide.name + "/thief"),
-                policeBlue: GameObject.Find(Jungfernheide.name + "/police blue"),
-                policeGreen: GameObject.Find(Jungfernheide.name + "/police green"),
-                policeRed: GameObject.Find(Jungfernheide.name + "/police red"),
-                policeYellow: GameObject.Find(Jungfernheide.name + "/police yellow"));
 
-            showHide.HidePlayersByDefault(
-                thief: GameObject.Find(JakobKaiserPlatz.name + "/thief"),
-                policeBlue: GameObject.Find(JakobKaiserPlatz.name + "/police blue"),
-                policeGreen: GameObject.Find(JakobKaiserPlatz.name + "/police green"),
-                policeRed: GameObject.Find(JakobKaiserPlatz.name + "/police red"),
-                policeYellow: GameObject.Find(JakobKaiserPlatz.name + "/police yellow"));
+        showHide = new ShowHidePlayers();
 
-            showHide.HidePlayersByDefault(
-                thief: GameObject.Find(SchlossCharlottenburg.name + "/thief"),
-                policeBlue: GameObject.Find(SchlossCharlottenburg.name + "/police blue"),
-                policeGreen: GameObject.Find(SchlossCharlottenburg.name + "/police green"),
-                policeRed: GameObject.Find(SchlossCharlottenburg.name + "/police red"),
-                policeYellow: GameObject.Find(SchlossCharlottenburg.name + "/police yellow"));
-
-             showHide.HidePlayersByDefault(
-                thief: GameObject.Find(Schlossbruecke.name + "/thief"),
-                policeBlue: GameObject.Find(Schlossbruecke.name + "/police blue"),
-                policeGreen: GameObject.Find(Schlossbruecke.name + "/police green"),
-                policeRed: GameObject.Find(Schlossbruecke.name + "/police red"),
-                policeYellow: GameObject.Find(Schlossbruecke.name + "/police yellow"));
-
-             showHide.HidePlayersByDefault(
-                thief: GameObject.Find(FlughafenTegel.name + "/thief"),
-                policeBlue: GameObject.Find(FlughafenTegel.name + "/police blue"),
-                policeGreen: GameObject.Find(FlughafenTegel.name + "/police green"),
-                policeRed: GameObject.Find(FlughafenTegel.name + "/police red"),
-                policeYellow: GameObject.Find(FlughafenTegel.name + "/police yellow"));
-
-
-            
-        }
 
         foreach (var player in pPositions)
         {
-                switch (player.Value)
-                {
-                    case "Jungfernheide":
-                        showHide.RenderPlayer(pColor,
-                            thief: GameObject.Find(Jungfernheide.name + "/thief"),
-                            policeBlue: GameObject.Find(Jungfernheide.name + "/police blue"),
-                            policeGreen: GameObject.Find(Jungfernheide.name + "/police green"),
-                            policeRed: GameObject.Find(Jungfernheide.name + "/police red"),
-                            policeYellow: GameObject.Find(Jungfernheide.name + "/police yellow"));
-                        break;
-                    case "JakobKaiserPlatz":
-                        showHide.RenderPlayer(pColor,
-                            thief: GameObject.Find(JakobKaiserPlatz.name + "/thief"),
-                            policeBlue: GameObject.Find(JakobKaiserPlatz.name + "/police blue"),
-                            policeGreen: GameObject.Find(JakobKaiserPlatz.name + "/police green"),
-                            policeRed: GameObject.Find(JakobKaiserPlatz.name + "/police red"),
-                            policeYellow: GameObject.Find(JakobKaiserPlatz.name + "/police yellow"));
-                        break;
+            #region Jungfernheide
 
-                    case "SchlossCharlottenburg":
-                        showHide.RenderPlayer(pColor,
-                            thief: GameObject.Find(SchlossCharlottenburg.name + "/thief"),
-                            policeBlue: GameObject.Find(SchlossCharlottenburg.name + "/police blue"),
-                            policeGreen: GameObject.Find(SchlossCharlottenburg.name + "/police green"),
-                            policeRed: GameObject.Find(SchlossCharlottenburg.name + "/police red"),
-                            policeYellow: GameObject.Find(SchlossCharlottenburg.name + "/police yellow"));
-                        break;
+            if (pPositions.ContainsValue("Jungfernheide"))
+            {
+                showHide.RenderPlayer(pColor,
+                    thief: GameObject.Find(Jungfernheide.name + "/thief"),
+                    policeBlue: GameObject.Find(Jungfernheide.name + "/police blue"),
+                    policeGreen: GameObject.Find(Jungfernheide.name + "/police green"),
+                    policeRed: GameObject.Find(Jungfernheide.name + "/police red"),
+                    policeYellow: GameObject.Find(Jungfernheide.name + "/police yellow"));
+            }
+            else
+            {
+                showHide.HidePlayersByDefault(
+                    thief: GameObject.Find(Jungfernheide.name + "/thief"),
+                    policeBlue: GameObject.Find(Jungfernheide.name + "/police blue"),
+                    policeGreen: GameObject.Find(Jungfernheide.name + "/police green"),
+                    policeRed: GameObject.Find(Jungfernheide.name + "/police red"),
+                    policeYellow: GameObject.Find(Jungfernheide.name + "/police yellow"));
+            }
 
-                    case "Schlossbruecke":
-                        showHide.RenderPlayer(pColor,
-                            thief: GameObject.Find(Schlossbruecke.name + "/thief"),
-                            policeBlue: GameObject.Find(Schlossbruecke.name + "/police blue"),
-                            policeGreen: GameObject.Find(Schlossbruecke.name + "/police green"),
-                            policeRed: GameObject.Find(Schlossbruecke.name + "/police red"),
-                            policeYellow: GameObject.Find(Schlossbruecke.name + "/police yellow"));
-                        break;
-                    case "FlughafenTegel":
-                        showHide.RenderPlayer(pColor,
-                            thief: GameObject.Find(FlughafenTegel.name + "/thief"),
-                            policeBlue: GameObject.Find(FlughafenTegel.name + "/police blue"),
-                            policeGreen: GameObject.Find(FlughafenTegel.name + "/police green"),
-                            policeRed: GameObject.Find(FlughafenTegel.name + "/police red"),
-                            policeYellow: GameObject.Find(FlughafenTegel.name + "/police yellow"));
-                        break;
-                    default: break;
-                }
-            
+            #endregion
+
+            #region JakobKaiserPlatz
+            if (pPositions.ContainsValue("JakobKaiserPlatz"))
+            {
+                showHide.RenderPlayer(pColor,
+                    thief: GameObject.Find(JakobKaiserPlatz.name + "/thief"),
+                    policeBlue: GameObject.Find(JakobKaiserPlatz.name + "/police blue"),
+                    policeGreen: GameObject.Find(JakobKaiserPlatz.name + "/police green"),
+                    policeRed: GameObject.Find(JakobKaiserPlatz.name + "/police red"),
+                    policeYellow: GameObject.Find(JakobKaiserPlatz.name + "/police yellow"));
+            }
+            else
+            {
+                showHide.HidePlayersByDefault(
+                    thief: GameObject.Find(JakobKaiserPlatz.name + "/thief"),
+                    policeBlue: GameObject.Find(JakobKaiserPlatz.name + "/police blue"),
+                    policeGreen: GameObject.Find(JakobKaiserPlatz.name + "/police green"),
+                    policeRed: GameObject.Find(JakobKaiserPlatz.name + "/police red"),
+                    policeYellow: GameObject.Find(JakobKaiserPlatz.name + "/police yellow"));
+            }
+
+            #endregion
+
+            #region SchlossCharlottenburg
+            if (pPositions.ContainsValue("SchlossCharlottenburg"))
+            {
+                showHide.RenderPlayer(pColor,
+                    thief: GameObject.Find(SchlossCharlottenburg.name + "/thief"),
+                    policeBlue: GameObject.Find(SchlossCharlottenburg.name + "/police blue"),
+                    policeGreen: GameObject.Find(SchlossCharlottenburg.name + "/police green"),
+                    policeRed: GameObject.Find(SchlossCharlottenburg.name + "/police red"),
+                    policeYellow: GameObject.Find(SchlossCharlottenburg.name + "/police yellow"));
+            }
+            else
+            {
+                showHide.HidePlayersByDefault(
+                    thief: GameObject.Find(SchlossCharlottenburg.name + "/thief"),
+                    policeBlue: GameObject.Find(SchlossCharlottenburg.name + "/police blue"),
+                    policeGreen: GameObject.Find(SchlossCharlottenburg.name + "/police green"),
+                    policeRed: GameObject.Find(SchlossCharlottenburg.name + "/police red"),
+                    policeYellow: GameObject.Find(SchlossCharlottenburg.name + "/police yellow"));
+            }
+
+            #endregion
+
+            #region    
+            if (pPositions.ContainsValue("Schlossbruecke"))
+            {
+                showHide.RenderPlayer(pColor,
+                    thief: GameObject.Find(Schlossbruecke.name + "/thief"),
+                    policeBlue: GameObject.Find(Schlossbruecke.name + "/police blue"),
+                    policeGreen: GameObject.Find(Schlossbruecke.name + "/police green"),
+                    policeRed: GameObject.Find(Schlossbruecke.name + "/police red"),
+                    policeYellow: GameObject.Find(Schlossbruecke.name + "/police yellow"));
+            }
+            else
+            {
+                showHide.HidePlayersByDefault(
+                    thief: GameObject.Find(Schlossbruecke.name + "/thief"),
+                    policeBlue: GameObject.Find(Schlossbruecke.name + "/police blue"),
+                    policeGreen: GameObject.Find(Schlossbruecke.name + "/police green"),
+                    policeRed: GameObject.Find(Schlossbruecke.name + "/police red"),
+                    policeYellow: GameObject.Find(Schlossbruecke.name + "/police yellow"));
+            }
+
+            #endregion
+
+            #region
+            if (pPositions.ContainsValue("FlughafenTegel"))
+            {
+                showHide.RenderPlayer(pColor,
+                    thief: GameObject.Find(FlughafenTegel.name + "/thief"),
+                    policeBlue: GameObject.Find(FlughafenTegel.name + "/police blue"),
+                    policeGreen: GameObject.Find(FlughafenTegel.name + "/police green"),
+                    policeRed: GameObject.Find(FlughafenTegel.name + "/police red"),
+                    policeYellow: GameObject.Find(FlughafenTegel.name + "/police yellow"));
+            }
+            else
+            {
+                showHide.HidePlayersByDefault(
+                    thief: GameObject.Find(FlughafenTegel.name + "/thief"),
+                    policeBlue: GameObject.Find(FlughafenTegel.name + "/police blue"),
+                    policeGreen: GameObject.Find(FlughafenTegel.name + "/police green"),
+                    policeRed: GameObject.Find(FlughafenTegel.name + "/police red"),
+                    policeYellow: GameObject.Find(FlughafenTegel.name + "/police yellow"));
+            }
+#endregion
+
         }
 
+
+
         //AllPlayers = GameObject.Find("Players").GetComponent<Text>();
-        Debug.Log(pName);
+        Debug.Log("My name is " + pName + "and my positions list looks like this:");
         //NameInfo.text = pName;
         //AllPlayers.text = players;
 

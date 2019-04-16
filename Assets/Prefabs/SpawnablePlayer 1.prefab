@@ -2116,11 +2116,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd541845cad4c438d856817e3ced3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Thief: {fileID: 100000, guid: 7aebece9e0d45784785a5b12ee7ed670, type: 3}
-  PoliceBlue: {fileID: 100000, guid: 906740cc8f8db3a4d9b9632e8a1a2e0d, type: 3}
-  PoliceGreen: {fileID: 100000, guid: c8232b3025c3bbf47ad82060f707945b, type: 3}
-  PoliceRed: {fileID: 100000, guid: dd831daafff8ea249a7f02f5fd7835cd, type: 3}
-  PoliceYellow: {fileID: 100000, guid: bbb877857a36f2944b7abef2caf46eb9, type: 3}
+  Jungfernheide: {fileID: 3590304826851399040, guid: 82eda378dc6deab448039f59551876f2,
+    type: 3}
+  JakobKaiserPlatz: {fileID: 4127659520490522901, guid: 9ff6176fbeeac7d49b8b755350a59315,
+    type: 3}
+  SchlossCharlottenburg: {fileID: 4366765136082049969, guid: 5325ef3f58ebed04ca03e87faa3740d3,
+    type: 3}
+  Schlossbruecke: {fileID: 5918471200533473687, guid: 0a181c41cd6eda947a13062f9794b1b5,
+    type: 3}
+  FlughafenTegel: {fileID: 5710212214941463299, guid: 116f7e2d5ebb9824aa56741f65502add,
+    type: 3}
   pName: 
   pColor: {r: 0, g: 0, b: 0, a: 0}
   NameInfo: {fileID: 1572114083786606023}

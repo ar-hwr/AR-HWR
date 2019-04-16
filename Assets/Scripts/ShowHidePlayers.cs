@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ShowHidePlayers : MonoBehaviour
 {
-    [HideInInspector] public Dictionary<GameObject, bool> PlayerBools = new Dictionary<GameObject, bool>();
+    [HideInInspector] public static Dictionary<GameObject, bool> PlayerBools = new Dictionary<GameObject, bool>();
 
     // Start is called before the first frame update
     void Start()
@@ -42,11 +42,15 @@ public class ShowHidePlayers : MonoBehaviour
 
         GameObject player = pColors[pColor];
 
-        PlayerBools.Add(thief, false);
-        PlayerBools.Add(policeBlue, false);
-        PlayerBools.Add(policeGreen, false);
-        PlayerBools.Add(policeRed, false);
-        PlayerBools.Add(policeYellow, false);
+        if (PlayerBools.Count == 0)
+        {
+            PlayerBools.Add(thief, false);
+            PlayerBools.Add(policeBlue, false);
+            PlayerBools.Add(policeGreen, false);
+            PlayerBools.Add(policeRed, false);
+            PlayerBools.Add(policeYellow, false);
+        }
+
 
         switch (player.name)
         {
@@ -71,9 +75,12 @@ public class ShowHidePlayers : MonoBehaviour
 
         foreach (var gameObject in PlayerBools)
         {
+            Debug.Log("Player: " + player.name + "\n" +
+                     gameObject.Key.name + " " + gameObject.Value.ToString());
             if (gameObject.Value)
             {
-                gameObject.Key.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                gameObject.Key.GetComponent<Transform>().localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                Debug.Log(gameObject.Key.GetComponent<Transform>().localScale.ToString());
             }
             else
             {
