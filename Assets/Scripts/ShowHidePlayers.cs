@@ -19,6 +19,15 @@ public class ShowHidePlayers : MonoBehaviour
 
     }
 
+    public void HidePlayersByDefault(GameObject thief, GameObject policeBlue, GameObject policeGreen, GameObject policeRed, GameObject policeYellow)
+    {
+        thief.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        policeBlue.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        policeGreen.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        policeRed.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        policeYellow.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+    }
+
     public void RenderPlayer(Color pColor, GameObject thief, GameObject policeBlue, GameObject policeGreen, GameObject policeRed, GameObject policeYellow)
     {
         Debug.Log("called renderPlayers with param " + pColor);

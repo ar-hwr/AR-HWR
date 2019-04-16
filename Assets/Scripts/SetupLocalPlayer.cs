@@ -29,7 +29,7 @@ public class SetupLocalPlayer : NetworkBehaviour
 
     public Text NameInfo;
     //public Text AllPlayers;
-
+    private ShowHidePlayers showHide;
 
 
     // Start is called before the first frame update
@@ -41,11 +41,51 @@ public class SetupLocalPlayer : NetworkBehaviour
         Schlossbruecke = GameObject.Find("Schlossbruecke");
         FlughafenTegel = GameObject.Find("Flughafen Tegel");
 
+        //instantiate ShowHideScript only if data about players and positions is available
+        if (pPositions.Count != 0)
+        {
+            showHide = new ShowHidePlayers();
+            showHide.HidePlayersByDefault(
+                thief: GameObject.Find(Jungfernheide.name + "/thief"),
+                policeBlue: GameObject.Find(Jungfernheide.name + "/police blue"),
+                policeGreen: GameObject.Find(Jungfernheide.name + "/police green"),
+                policeRed: GameObject.Find(Jungfernheide.name + "/police red"),
+                policeYellow: GameObject.Find(Jungfernheide.name + "/police yellow"));
+
+            showHide.HidePlayersByDefault(
+                thief: GameObject.Find(JakobKaiserPlatz.name + "/thief"),
+                policeBlue: GameObject.Find(JakobKaiserPlatz.name + "/police blue"),
+                policeGreen: GameObject.Find(JakobKaiserPlatz.name + "/police green"),
+                policeRed: GameObject.Find(JakobKaiserPlatz.name + "/police red"),
+                policeYellow: GameObject.Find(JakobKaiserPlatz.name + "/police yellow"));
+
+            showHide.HidePlayersByDefault(
+                thief: GameObject.Find(SchlossCharlottenburg.name + "/thief"),
+                policeBlue: GameObject.Find(SchlossCharlottenburg.name + "/police blue"),
+                policeGreen: GameObject.Find(SchlossCharlottenburg.name + "/police green"),
+                policeRed: GameObject.Find(SchlossCharlottenburg.name + "/police red"),
+                policeYellow: GameObject.Find(SchlossCharlottenburg.name + "/police yellow"));
+
+             showHide.HidePlayersByDefault(
+                thief: GameObject.Find(Schlossbruecke.name + "/thief"),
+                policeBlue: GameObject.Find(Schlossbruecke.name + "/police blue"),
+                policeGreen: GameObject.Find(Schlossbruecke.name + "/police green"),
+                policeRed: GameObject.Find(Schlossbruecke.name + "/police red"),
+                policeYellow: GameObject.Find(Schlossbruecke.name + "/police yellow"));
+
+             showHide.HidePlayersByDefault(
+                thief: GameObject.Find(FlughafenTegel.name + "/thief"),
+                policeBlue: GameObject.Find(FlughafenTegel.name + "/police blue"),
+                policeGreen: GameObject.Find(FlughafenTegel.name + "/police green"),
+                policeRed: GameObject.Find(FlughafenTegel.name + "/police red"),
+                policeYellow: GameObject.Find(FlughafenTegel.name + "/police yellow"));
+
+
+            
+        }
+
         foreach (var player in pPositions)
         {
-            if (player.Key == pName)
-            {
-                ShowHidePlayers showHide = new ShowHidePlayers();
                 switch (player.Value)
                 {
                     case "Jungfernheide":
@@ -89,10 +129,10 @@ public class SetupLocalPlayer : NetworkBehaviour
                             policeGreen: GameObject.Find(FlughafenTegel.name + "/police green"),
                             policeRed: GameObject.Find(FlughafenTegel.name + "/police red"),
                             policeYellow: GameObject.Find(FlughafenTegel.name + "/police yellow"));
-                        break;                     
+                        break;
                     default: break;
-                }                       
-            }
+                }
+            
         }
 
         //AllPlayers = GameObject.Find("Players").GetComponent<Text>();
