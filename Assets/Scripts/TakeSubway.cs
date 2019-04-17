@@ -34,7 +34,7 @@ public class TakeSubway : NetworkBehaviour
         subwayInfo.text = subwayMoves.ToString();
     }
 
-    ////actualizes the players view
+    ////actualizes the Players view
     //void OnChangeSubwayCount(int subwayMoves)
     //{
     //    subwayInfo.text = subwayMoves.ToString();

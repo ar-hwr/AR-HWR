@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2380852239946443605}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.09960498, y: -0.017999997, z: -0.05199999}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4983156481415312337}
   m_RootOrder: 1
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4833593960269643972}
   - component: {fileID: 454865397081406421}
   m_Layer: 0
-  m_Name: Schloss Charlottenburg
+  m_Name: SchlossCharlottenburg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -267,7 +267,7 @@ Transform:
   m_GameObject: {fileID: 5006990857631295895}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.08946095, y: 0.03, z: -0.07142885}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4983156481415312337}
   m_RootOrder: 0
@@ -364,7 +364,7 @@ Transform:
   m_GameObject: {fileID: 6390575860057461742}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.106, y: 0.03, z: -0.084}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4983156481415312337}
   m_RootOrder: 3
@@ -461,7 +461,7 @@ Transform:
   m_GameObject: {fileID: 6907825113718787035}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.0726052, y: -0.012, z: -0.068001024}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4983156481415312337}
   m_RootOrder: 4
@@ -558,7 +558,7 @@ Transform:
   m_GameObject: {fileID: 8051179726220103404}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.09260537, y: -0.0069999998, z: -0.09200033}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4983156481415312337}
   m_RootOrder: 2

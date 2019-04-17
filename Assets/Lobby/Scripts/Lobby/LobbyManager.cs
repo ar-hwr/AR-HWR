@@ -17,7 +17,7 @@ namespace Prototype.NetworkLobby
 
 
         [Header("Unity UI Lobby")]
-        [Tooltip("Time in second between all players ready & match start")]
+        [Tooltip("Time in second between all Players ready & match start")]
         public float prematchCountdown = 5.0f;
 
         [Space]
@@ -39,7 +39,7 @@ namespace Prototype.NetworkLobby
         public Text hostInfo;
 
         //Client numPlayers from NetworkManager is always 0, so we count (throught connect/destroy in LobbyPlayer) the number
-        //of players, so that even client know how many player there is.
+        //of Players, so that even client know how many player there is.
         [HideInInspector]
         public int _playerNumber = 0;
 
