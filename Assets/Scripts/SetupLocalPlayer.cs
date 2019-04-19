@@ -28,10 +28,12 @@ public class SetupLocalPlayer : NetworkBehaviour
     {
         foreach (var player in PlayerNamePlayerPosition)
         {
-                var playerToRender = GameObject.Find(player.Value + "/" + player.Key);
-                playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);                   
+            RenderPlayer(player);
+                //var playerToRender = GameObject.Find(player.Value + "/" + player.Key);
+                //playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);                   
         }
 
+        //NetworkServer.FindLocalObject();
 
         Debug.Log("My name is " + PlayerName + "and my positions list looks like this:"); 
         foreach (var pos in PlayerNamePlayerPosition)
@@ -47,6 +49,41 @@ public class SetupLocalPlayer : NetworkBehaviour
     //    Debug.Log(PlayerName);
     //}
 
+
+
+    void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition)
+    {    
+
+        if (isServer)
+        {          
+            RpcRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+        }
+
+        if (isLocalPlayer)
+        {
+            CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcRenderPlayer(string key, string value)
+    {
+        var playerToRender = GameObject.Find(value + "/" + key);
+        playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        Debug.Log("client rpc");
+        Debug.Log(playerToRender.name + " " + playerToRender.GetComponent<Transform>().localScale.ToString());
+    }
+
+    [Command]
+    public void CmdRenderPlayer(string key, string value)
+    {
+        var playerToRender = GameObject.Find(value + "/" + key);
+        playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        Debug.Log("command");
+        Debug.Log(playerToRender.name + " " + playerToRender.GetComponent<Transform>().localScale.ToString());
+    }
 
 
     //void OnChangePlayerName(string name)
