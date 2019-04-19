@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="Messedamm_ZOB" size="0.053000 0.053000" />
+    <ImageTarget name="Zoologischer_Garten" size="0.053000 0.053000" />
+    <ImageTarget name="Wittenbergplatz" size="0.053000 0.053000" />
+    <ImageTarget name="Wilmersdorfer_Str" size="0.053000 0.053000" />
+    <ImageTarget name="Westhafen" size="0.053000 0.053000" />
+    <ImageTarget name="Walther_Schreiber_Platz" size="0.053000 0.053000" />
+    <ImageTarget name="Treptower_Park" size="0.053000 0.053000" />
+    <ImageTarget name="Tiergarten" size="0.053000 0.053000" />
+    <ImageTarget name="Theodor-Heuss-Platz" size="0.053000 0.053000" />
+    <ImageTarget name="Tempelhof" size="0.053000 0.053000" />
+    <ImageTarget name="Sudkreuz" size="0.053000 0.053000" />
+    <ImageTarget name="Schloss_Bellevue" size="0.053000 0.053000" />
+    <ImageTarget name="Rosa-Luxemburg-Platz" size="0.053000 0.053000" />
+    <ImageTarget name="Rathaus_Tiergarten" size="0.053000 0.053000" />
+    <ImageTarget name="Rathaus_Neukolln" size="0.053000 0.053000" />
+    <ImageTarget name="Potsdamer_Platz" size="0.053000 0.053000" />
+    <ImageTarget name="Platz_der_Vereinten_Nationen" size="0.053000 0.053000" />
+    <ImageTarget name="Platz_der_Luftbrucke" size="0.053000 0.053000" />
+    <ImageTarget name="Planetenstrasse" size="0.053000 0.053000" />
+    <ImageTarget name="Ostbahnhof" size="0.053000 0.053000" />
+    <ImageTarget name="Messe_Sud" size="0.053000 0.053000" />
+    <ImageTarget name="Markisches_Museum" size="0.053000 0.053000" />
+    <ImageTarget name="Landsberger_Allee" size="0.053000 0.053000" />
+    <ImageTarget name="Karl-Marx-Platz" size="0.053000 0.053000" />
+    <ImageTarget name="Hohenzollernplatz" size="0.053000 0.053000" />
+    <ImageTarget name="Hohenzollerndamm" size="0.053000 0.053000" />
+    <ImageTarget name="Herthastr" size="0.053000 0.053000" />
+    <ImageTarget name="Haus_der_Kulturen_der_Welt" size="0.053000 0.053000" />
+    <ImageTarget name="Hauptbahnhof" size="0.053000 0.053000" />
+    <ImageTarget name="Grunewald_Roseneck" size="0.053000 0.053000" />
+    <ImageTarget name="Grosser_Stern" size="0.053000 0.053000" />
+    <ImageTarget name="Grenzallee" size="0.053000 0.053000" />
+    <ImageTarget name="Gesundbrunnen" size="0.053000 0.053000" />
+    <ImageTarget name="Friedrichstrasse" size="0.053000 0.053000" />
+    <ImageTarget name="Frankfurter_Allee" size="0.053000 0.053000" />
+    <ImageTarget name="Europa_Center" size="0.053000 0.053000" />
+    <ImageTarget name="Checkpoint_Charlie" size="0.053000 0.053000" />
+    <ImageTarget name="Bundesplatz" size="0.053000 0.053000" />
+    <ImageTarget name="Brandenburger_Tor" size="0.053000 0.053000" />
+    <ImageTarget name="Berliner_Str" size="0.053000 0.053000" />
+    <ImageTarget name="Am_Volkspark" size="0.053000 0.053000" />
+    <ImageTarget name="Alexanderplatz" size="0.053000 0.053000" />
     <ImageTarget name="Jungfernheide" size="0.053000 0.053000" />
     <ImageTarget name="Jakob_Kaiser_Platz" size="0.053000 0.053000" />
     <ImageTarget name="Schlossbruecke" size="0.053000 0.053000" />

@@ -44,11 +44,6 @@ public class SetupLocalPlayer : NetworkBehaviour
         //OnChangePlayerName(PlayerName);
     }
 
-    //void Update()
-    //{
-    //    Debug.Log(PlayerName);
-    //}
-
 
 
     void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition)

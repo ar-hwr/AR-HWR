@@ -37,7 +37,7 @@ public class NetworkLobbyHook : LobbyHook
         "Landsberger Allee",
         "Märkisches Museum",
         "Messe Süd",
-        "Messedamm/ZOB",
+        "Messedamm ZOB",
         "Ostbahnhof",
         "Planetenstraße",
         "Platz der Luftbrücke",
@@ -98,6 +98,12 @@ public class NetworkLobbyHook : LobbyHook
         Random random = new Random();
         int stationIndex = random.Next(0, Stations.Count -1);
         SetupLocalPlayer.PlayerNamePlayerPosition.Add(playerColorPlayerName[localPlayer.PlayerColor], Stations[stationIndex]);
+
+        //foreach (var station in Stations)
+        //{
+        //    SetupLocalPlayer.PlayerNamePlayerPosition.Add("thief", station);
+        //}
+        
         Debug.Log("Station is " + Stations[stationIndex]);
     }
 }
