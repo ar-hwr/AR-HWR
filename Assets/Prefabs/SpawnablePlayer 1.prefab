@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &182215907533182278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -175,7 +175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &182215908283503274
 RectTransform:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182215908283503273}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -252,7 +252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &182215908880606543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -350,7 +350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1000, y: -71}
+  m_AnchoredPosition: {x: -384, y: -71}
   m_SizeDelta: {x: 320, y: 52}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &182215909250914006
@@ -430,8 +430,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 521738994835616139}
-        m_MethodName: ClientTakeBike
+      - m_Target: {fileID: 8838238573763634447}
+        m_MethodName: OnTakeBike
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1855,17 +1855,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3765824917236471120}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &2566835077533487290
@@ -2116,19 +2105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd541845cad4c438d856817e3ced3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Jungfernheide: {fileID: 3590304826851399040, guid: 82eda378dc6deab448039f59551876f2,
-    type: 3}
-  JakobKaiserPlatz: {fileID: 4127659520490522901, guid: 9ff6176fbeeac7d49b8b755350a59315,
-    type: 3}
-  SchlossCharlottenburg: {fileID: 4366765136082049969, guid: 5325ef3f58ebed04ca03e87faa3740d3,
-    type: 3}
-  Schlossbruecke: {fileID: 5918471200533473687, guid: 0a181c41cd6eda947a13062f9794b1b5,
-    type: 3}
-  FlughafenTegel: {fileID: 5710212214941463299, guid: 116f7e2d5ebb9824aa56741f65502add,
-    type: 3}
-  pName: 
-  pColor: {r: 0, g: 0, b: 0, a: 0}
-  NameInfo: {fileID: 1572114083786606023}
+  PlayerName: 
+  PlayerColor: {r: 0, g: 0, b: 0, a: 0}
+  PlayerPrefab: 
 --- !u!1 &6048356545661704155
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,12 +10,26 @@ using UnityEngine.Networking;
 /// TODO move this to another .cs file
 /// </summary>
 [System.Serializable]
-public class Test
+public class Data
 {
-    public string userId;
     public byte id;
-    public string title;
-    public bool completed;
+    public string name;
+    public string color;
+    public byte match_id;
+    public byte subway_tickets;
+    public byte bus_tickets;
+    public byte bike_tickets;
+    public Connection[] connections;
+    public byte position_node;
+    public string position_name;
+}
+
+[Serializable]
+public class Connection
+{
+    public byte id;
+    public string type;
+    public string node_name;
 }
 
 public class GetRequestHandler : MonoBehaviour
@@ -27,9 +41,9 @@ public class GetRequestHandler : MonoBehaviour
     /// <returns>the server's response or an error code as soon as the server answers (yield)</returns>
     /// 
     // set server url of custom API here
-    private string serverURL = "https://jsonplaceholder.typicode.com/todos/1";
+    private string serverURL = "http://finalnothing.net:9292/players/2";
 
-    public IEnumerator GetText(Action<Test> result)
+    public IEnumerator GetText(Action<Data> result)
     {
         // user UnityWebRequest and not Core WebRequests when working with Unity
         UnityWebRequest request = UnityWebRequest.Get(serverURL);
@@ -43,8 +57,8 @@ public class GetRequestHandler : MonoBehaviour
         {
             if (result != null)
             {
-                Test test = JsonConvert.DeserializeObject<Test>(request.downloadHandler.text);
-                result(test);
+                Data data = JsonConvert.DeserializeObject<Data>(request.downloadHandler.text);
+                result(data);
             }
         }
     }

@@ -89,6 +89,7 @@ public class NetworkLobbyHook : LobbyHook
         //mapping attributes from scene to scene
         localPlayer.PlayerName = lobby.playerName;
         localPlayer.PlayerColor = lobby.playerColor;
+        localPlayer.PlayerPrefab = playerColorPlayerName[lobby.playerColor];
    
         //creating and logging a list of Players that joined the game
         SetupLocalPlayer.Players += lobby.playerName;

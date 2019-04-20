@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using HoloToolkit.Unity;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -17,6 +18,9 @@ public class SetupLocalPlayer : NetworkBehaviour
     [HideInInspector]
     public Color PlayerColor;
 
+    [HideInInspector]
+    public string PlayerPrefab;
+
     //[SyncVar(hook = "OnChangePlayerList")]
     //[SyncVar]
     [HideInInspector]
@@ -26,48 +30,61 @@ public class SetupLocalPlayer : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(PlayerName);
+
         foreach (var player in PlayerNamePlayerPosition)
         {
             RenderPlayer(player);
-                //var playerToRender = GameObject.Find(player.Value + "/" + player.Key);
-                //playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);                   
+            Debug.Log(player.Key + " " + player.Value);
         }
-
-        //NetworkServer.FindLocalObject();
-
-        Debug.Log("My name is " + PlayerName + "and my positions list looks like this:"); 
-        foreach (var pos in PlayerNamePlayerPosition)
-        {
-            Debug.Log(pos.Key + " " + pos.Value);
-        }
-
-        //OnChangePlayerName(PlayerName);
     }
 
-
-
-    void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition)
-    {    
-
+    void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition, bool deleteFromScene = false)
+    {
         if (isServer)
-        {          
-            RpcRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+        {
+            if (deleteFromScene)
+            {
+                RpcHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+            }
+            else
+            {
+                RpcRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+            }
         }
 
         if (isLocalPlayer)
         {
-            CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+            if (deleteFromScene)
+            {
+                CmdHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+            }
+            else
+            {
+                CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+            }
         }
     }
+
+    //void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition)
+    //{    
+
+    //    if (isServer)
+    //    {          
+    //        RpcRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+    //    }
+
+    //    if (isLocalPlayer)
+    //    {
+    //        CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+    //    }
+    //}
 
     [ClientRpc]
     public void RpcRenderPlayer(string key, string value)
     {
         var playerToRender = GameObject.Find(value + "/" + key);
         playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
-
-        Debug.Log("client rpc");
-        Debug.Log(playerToRender.name + " " + playerToRender.GetComponent<Transform>().localScale.ToString());
     }
 
     [Command]
@@ -75,46 +92,31 @@ public class SetupLocalPlayer : NetworkBehaviour
     {
         var playerToRender = GameObject.Find(value + "/" + key);
         playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
-
-        Debug.Log("command");
-        Debug.Log(playerToRender.name + " " + playerToRender.GetComponent<Transform>().localScale.ToString());
     }
 
 
-    //void OnChangePlayerName(string name)
-    //{
-    //    if (isServer)
-    //    {
-    //        RpcChangePlayerNames(name);
-    //    }
+    [ClientRpc]
+    public void RpcHidePlayer(string key, string value)
+    {
+        var playerToRender = GameObject.Find(value + "/" + key);
+        playerToRender.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+    }
 
-    //    if (isLocalPlayer)
-    //    {
-    //        CmdChangePlayerNames(name);
-    //    }
-
-    //    NameInfo.text = PlayerName;
-    //}
-
-    //[Command]
-    //public void CmdChangePlayerNames(string name)
-    //{
-    //    Players = Players + " " + name;
-
-    //    Debug.Log("Cmd set Players to" + Players);
-    //}
-
-    //[ClientRpc]
-    //public void RpcChangePlayerNames(string name)
-    //{
-    //    Players = Players + " " + name;
-
-    //    Debug.Log("Rcp set Players to" + Players);
-    //}
+    [Command]
+    public void CmdHidePlayer(string key, string value)
+    {
+        var playerToRender = GameObject.Find(value + "/" + key);
+        playerToRender.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+    }
 
 
-    //void OnChangePlayerList(string name)
-    //{
-    //    AllPlayers.text = Players;
-    //}
+    public void OnTakeBike()
+    {
+        RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), true);
+        UIActualizer actualizer = new UIActualizer();
+        actualizer.OnTakeBike(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab));
+        RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab));
+    }
+
+
 }
