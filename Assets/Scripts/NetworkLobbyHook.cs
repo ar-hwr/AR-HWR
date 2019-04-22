@@ -1,6 +1,7 @@
 ﻿using Prototype.NetworkLobby;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = System.Random;
@@ -100,11 +101,14 @@ public class NetworkLobbyHook : LobbyHook
         int stationIndex = random.Next(0, Stations.Count -1);
         SetupLocalPlayer.PlayerNamePlayerPosition.Add(playerColorPlayerName[localPlayer.PlayerColor], Stations[stationIndex]);
 
+        //button take bike doesnt render //comment this out to try if it will render then
+        localPlayer.SerializedDictionary = localPlayer.customSerialize(SetupLocalPlayer.PlayerNamePlayerPosition);
+
         //foreach (var station in Stations)
         //{
         //    SetupLocalPlayer.PlayerNamePlayerPosition.Add("thief", station);
         //}
-        
+
         Debug.Log("Station is " + Stations[stationIndex]);
     }
 }

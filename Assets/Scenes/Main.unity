@@ -2573,7 +2573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &382561403
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4288,7 +4288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &564633199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7466,7 +7466,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: 
+  SerializedDictionary: 
   PlayerColor: {r: 0, g: 0, b: 0, a: 0}
+  PlayerPrefab: 
+  BikeInfo: {fileID: 0}
 --- !u!114 &854490749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10559,6 +10562,7 @@ GameObject:
   - component: {fileID: 1334615684}
   - component: {fileID: 1334615683}
   - component: {fileID: 1334615687}
+  - component: {fileID: 1334615688}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Player
@@ -10667,6 +10671,39 @@ MonoBehaviour:
   TakeBus: {fileID: 382561404}
   TakeBike: {fileID: 564633200}
   TakeSubway: {fileID: 1553677569}
+--- !u!114 &1334615688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334615682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!1001 &1346130779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12312,7 +12349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1553677568
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14462,6 +14499,7 @@ GameObject:
   - component: {fileID: 1875594761}
   - component: {fileID: 1875594760}
   - component: {fileID: 1875594759}
+  - component: {fileID: 1875594762}
   m_Layer: 0
   m_Name: BikeConnectionsDropdown
   m_TagString: Untagged
@@ -14584,6 +14622,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875594757}
   m_CullTransparentMesh: 0
+--- !u!114 &1875594762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875594757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626bf35516bb60647b04241aef090e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SubwayInfo: {fileID: 1623467084}
+  BikeInfo: {fileID: 1630822375}
+  BusInfo: {fileID: 1034066634}
+  BusConnectionDropdown: {fileID: 673235668}
+  BikeConnectionDropdown: {fileID: 1875594759}
+  SubwayConnectionDropdown: {fileID: 1420416100}
+  TakeBus: {fileID: 382561404}
+  TakeBike: {fileID: 564633200}
+  TakeSubway: {fileID: 1553677569}
 --- !u!43 &1900183679
 Mesh:
   m_ObjectHideFlags: 0

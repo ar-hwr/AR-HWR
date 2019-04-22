@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HoloToolkit.Sharing.SyncModel;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class UIActualizer : MonoBehaviour
+public class UIActualizer : NetworkBehaviour
 {
 
     public Text SubwayInfo;
@@ -25,6 +28,30 @@ public class UIActualizer : MonoBehaviour
     {
         GetRequestHandler getRequestHandler = new GetRequestHandler();
         StartCoroutine(getRequestHandler.GetText(result => UpdateUI(result)));
+
+        if (isServer)
+        {
+            BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = "neue Option" });
+            RpcUpdateBusConnection("neue Option");
+        }
+
+        if (isLocalPlayer)
+        {
+            BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = "neue Option" });
+            CmdUpdateBusConnection("neue Option");
+        }
+    }
+
+    [ClientRpc]
+    void RpcUpdateBusConnection(string option)
+    {
+        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    }
+
+    [Command]
+    void CmdUpdateBusConnection(string option)
+    {
+        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
     }
 
 
@@ -86,11 +113,6 @@ public class UIActualizer : MonoBehaviour
     public void OnTakeBus()
     {
         var nextStation = BusConnectionDropdown.captionText.text;
-        //foreach (var player in SetupLocalPlayer.PlayerNamePlayerPosition)
-        //{
-        //    if(player.)
-        //}
-
 
         SetupLocalPlayer.PlayerNamePlayerPosition[setupLocalPlayer.PlayerName] = nextStation;
         Debug.Log("User wants to go to station " + BusConnectionDropdown.captionText.text);
@@ -102,10 +124,7 @@ public class UIActualizer : MonoBehaviour
         var nextStation = GameObject.Find("BikeConnectionsDropdown").GetComponent<Dropdown>();
         SetupLocalPlayer.PlayerNamePlayerPosition[playerNamePlayerValue.Key] = nextStation.captionText.text;
 
-
-
         Debug.Log("User wants to go to station " + nextStation.captionText.text);
-        ;
     }
 
     public void OnTakeSubway()
