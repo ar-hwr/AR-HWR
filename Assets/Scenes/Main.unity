@@ -7469,7 +7469,15 @@ MonoBehaviour:
   SerializedDictionary: 
   PlayerColor: {r: 0, g: 0, b: 0, a: 0}
   PlayerPrefab: 
+  SubwayInfo: {fileID: 0}
   BikeInfo: {fileID: 0}
+  BusInfo: {fileID: 0}
+  BusConnectionDropdown: {fileID: 0}
+  BikeConnectionDropdown: {fileID: 0}
+  SubwayConnectionDropdown: {fileID: 0}
+  TakeBus: {fileID: 0}
+  TakeBike: {fileID: 0}
+  TakeSubway: {fileID: 0}
 --- !u!114 &854490749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10569,7 +10577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1334615683
 MonoBehaviour:
   m_ObjectHideFlags: 0

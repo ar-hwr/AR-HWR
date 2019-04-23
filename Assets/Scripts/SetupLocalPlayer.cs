@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using HoloToolkit.Unity;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -31,12 +28,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     [HideInInspector]
     public static string Players;
 
-    //public Text BikeInfo;
-
-
-
-
-
+    //referencing UI
     public Text SubwayInfo;
     public Text BikeInfo;
     public Text BusInfo;
@@ -46,9 +38,6 @@ public class SetupLocalPlayer : NetworkBehaviour
     public Button TakeBus;
     public Button TakeBike;
     public Button TakeSubway;
-
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +54,7 @@ public class SetupLocalPlayer : NetworkBehaviour
         GetRequestHandler getRequestHandler = new GetRequestHandler();
         //StartCoroutine(getRequestHandler.GetText2(SubwayInfo, result => UpdateUI(result)));
         //StartCoroutine(getRequestHandler.GetText2(SubwayInfo, result => UpdateUI(result)));
-        StartCoroutine(getRequestHandler.FetchResponseFromWeb(SubwayInfo, result => UpdateUI(result)));
+        StartCoroutine(getRequestHandler.FetchResponseFromWeb(result => UpdateUI(result)));
     }
 
 
@@ -99,11 +88,16 @@ public class SetupLocalPlayer : NetworkBehaviour
     [ClientRpc]
     void RpcUpdateSubwayConnection(string option)
     {
-        SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+        networkedUpdatedSubwayConnection(option);
     }
 
     [Command]
     void CmdUpdateSubwayConnection(string option)
+    {
+        networkedUpdatedSubwayConnection(option);
+    }
+
+    private void networkedUpdatedSubwayConnection(string option)
     {
         SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
     }
@@ -112,25 +106,34 @@ public class SetupLocalPlayer : NetworkBehaviour
     [ClientRpc]
     void RpcClearOptions(string nameOfDropdown)
     {
-        GameObject.Find(nameOfDropdown).GetComponent<Dropdown>().ClearOptions();
+        networkedClearOptions(nameOfDropdown);
     }
 
     [Command]
     void CmdClearOptions(string nameOfDropdown)
     {
+        networkedClearOptions(nameOfDropdown);
+    }
+
+    private void networkedClearOptions(string nameOfDropdown)
+    {
         GameObject.Find(nameOfDropdown).GetComponent<Dropdown>().ClearOptions();
     }
+
 
     [ClientRpc]
     void RpcForceUpdate(string nameOfDropdown)
     {
-        var dropdown = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
-        dropdown.value = 1;
-        dropdown.value = 0;
+        networedUpdate(nameOfDropdown);
     }
 
     [Command]
     void CmdForceUpdate(string nameOfDropdown)
+    {
+        networedUpdate(nameOfDropdown);
+    }
+
+    private void networedUpdate(string nameOfDropdown)
     {
         var dropdown = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
         dropdown.value = 1;
@@ -141,7 +144,6 @@ public class SetupLocalPlayer : NetworkBehaviour
     void UpdateUI(Data data)
     {
         SubwayInfo.text = data.subway_tickets.ToString();
-        SubwayInfo.text = data.connections.ToString();
         BikeInfo.text = data.bike_tickets.ToString();
         BusInfo.text = data.bus_tickets.ToString();
 
@@ -165,7 +167,6 @@ public class SetupLocalPlayer : NetworkBehaviour
                 default:
                     break;
             }
-
         }
 
         AddOptionsToDropdown(listOfBikeStations, BikeConnectionDropdown, TakeBike);
@@ -188,7 +189,7 @@ public class SetupLocalPlayer : NetworkBehaviour
             foreach (var station in stationListForSelectedVehicle)
             {
                 dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
-          
+
             }
 
             //this switch from 1 to 0 is only to refresh the visual DdMenu
@@ -211,15 +212,15 @@ public class SetupLocalPlayer : NetworkBehaviour
                 foreach (var station in stationListForSelectedVehicle)
                 {
                     dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
-                    switch (dropDownForSelectedVehicle.name.ToLower())
+                    switch (dropDownForSelectedVehicle.name)
                     {
-                        case "busdropdown":
+                        case "BusDropdown":
                             RpcUpdateBusConnection(station);
                             break;
-                        case "bikedropdown":
+                        case "BikeDropdown":
                             RpcUpdateBikeConnection(station);
                             break;
-                        case "subwaydropdown":
+                        case "SubwayDropdown":
                             RpcUpdateSubwayConnection(station);
                             break;
                         default:
@@ -249,15 +250,15 @@ public class SetupLocalPlayer : NetworkBehaviour
                 foreach (var station in stationListForSelectedVehicle)
                 {
                     dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
-                    switch (dropDownForSelectedVehicle.name.ToLower())
+                    switch (dropDownForSelectedVehicle.name)
                     {
-                        case "busdropdown":
+                        case "BusDropdown":
                             CmdUpdateBusConnection(station);
                             break;
-                        case "bikedropdown":
+                        case "BikeDropdown":
                             CmdUpdateBikeConnection(station);
                             break;
-                        case "subwaydropdown":
+                        case "SubwayDropdown":
                             CmdUpdateSubwayConnection(station);
                             break;
                         default:
@@ -322,44 +323,26 @@ public class SetupLocalPlayer : NetworkBehaviour
     [ClientRpc]
     public void RpcRenderPlayer(string key, string value)
     {
-        try
-        {
-            var playerToRender = GameObject.Find(value + "/" + key);
-            playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        }
-        catch (Exception e)
-        {
-            BikeInfo.text = e.Message;
-        }
+        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
 
     [Command]
     public void CmdRenderPlayer(string key, string value)
     {
-        var playerToRender = GameObject.Find(value + "/" + key);
-        playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
 
 
     [ClientRpc]
     public void RpcHidePlayer(string key, string value)
     {
-        try
-        {
-            var playerToRender = GameObject.Find(value + "/" + key);
-            playerToRender.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
-        }
-        catch (Exception e)
-        {
-            BikeInfo.text = e.Message;
-        }
+        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
     }
 
     [Command]
     public void CmdHidePlayer(string key, string value)
     {
-        var playerToRender = GameObject.Find(value + "/" + key);
-        playerToRender.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
     }
 
     [Command]
@@ -377,24 +360,41 @@ public class SetupLocalPlayer : NetworkBehaviour
     }
 
 
+    public void OnTakeBus()
+    {
+        OnTakeVehicle("BusDropdown");
+    }
+
     public void OnTakeBike()
+    {
+        OnTakeVehicle("BikeDropdown");
+    }
+
+    public void OnTakeSubway()
+    {
+        OnTakeVehicle("SubwayDropdown");
+    }
+
+
+    public void OnTakeVehicle(string nameOfDropdown)
     {
         ActualizeDictionary(SerializedDictionary);
 
         RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), true);
         UIActualizer actualizer = new UIActualizer();
-        actualizer.OnTakeBike(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab));
+        actualizer.OnTakeVehicle(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), nameOfDropdown);
 
         SerializedDictionary = customSerialize(PlayerNamePlayerPosition);
         ActualizeDictionary(SerializedDictionary);
         RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab));
     }
 
+
     public string customSerialize(Dictionary<string, string> players)
     {
         string z = String.Empty;
         foreach (var player in players)
-        {           
+        {
             z += player.Key + "," + player.Value + ";";
         }
         z = z.Remove(z.Length - 1);
