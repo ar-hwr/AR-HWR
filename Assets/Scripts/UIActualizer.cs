@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HoloToolkit.Sharing.SyncModel;
@@ -26,89 +27,212 @@ public class UIActualizer : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetRequestHandler getRequestHandler = new GetRequestHandler();
-        StartCoroutine(getRequestHandler.GetText(result => UpdateUI(result)));
+        //GetRequestHandler getRequestHandler = new GetRequestHandler();
+        //StartCoroutine(getRequestHandler.GetText2(result => UpdateUI(result)));
 
-        if (isServer)
-        {
-            BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = "neue Option" });
-            RpcUpdateBusConnection("neue Option");
-        }
+        //if (isServer)
+        //{
+        //    RpcClearOptions(SubwayConnectionDropdown.name);
+        //    BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = "neue Option" });
+        //    RpcUpdateBusConnection("neue Option");
+        //}
 
-        if (isLocalPlayer)
-        {
-            BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = "neue Option" });
-            CmdUpdateBusConnection("neue Option");
-        }
-    }
-
-    [ClientRpc]
-    void RpcUpdateBusConnection(string option)
-    {
-        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
-    }
-
-    [Command]
-    void CmdUpdateBusConnection(string option)
-    {
-        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+        //if (isLocalPlayer)
+        //{
+        //    CmdClearOptions(SubwayConnectionDropdown.name);
+        //    BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = "neue Option" });
+        //    CmdUpdateBusConnection("neue Option");
+        //}
     }
 
 
-    void UpdateUI(Data data)
-    {
-        SubwayInfo.text = data.subway_tickets.ToString();
-        BikeInfo.text = data.bike_tickets.ToString();
-        BusInfo.text = data.bus_tickets.ToString();
+    ////updating bus dropdown
+    //[ClientRpc]
+    //void RpcUpdateBusConnection(string option)
+    //{
+    //    BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    //}
 
-        var listOfBikeStations = new List<string>();
-        var listOfBusStations = new List<string>();
-        var listOfSubwayStations = new List<string>();
+    //[Command]
+    //void CmdUpdateBusConnection(string option)
+    //{
+    //    BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    //}
 
-        foreach (var connection in data.connections)
-        {
-            switch (connection.type)
-            {
-                case "bike":
-                    listOfBikeStations.Add(connection.node_name);
-                    break;
-                case "subway":
-                    listOfSubwayStations.Add(connection.node_name);
-                    break;
-                case "bus":
-                    listOfBusStations.Add(connection.node_name);
-                    break;
-                default:
-                    break;
-            }
+    ////updating bike dropdown
+    //[ClientRpc]
+    //void RpcUpdateBikeConnection(string option)
+    //{
+    //    BikeConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    //}
 
-        }
+    //[Command]
+    //void CmdUpdateBikeConnection(string option)
+    //{
+    //    BikeConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    //}
 
-        AddOptionsToDropdown(listOfBikeStations, BikeConnectionDropdown, TakeBike);
-        AddOptionsToDropdown(listOfBusStations, BusConnectionDropdown, TakeBus);
-        AddOptionsToDropdown(listOfSubwayStations, SubwayConnectionDropdown, TakeSubway);
-    }
+    ////updating subway dropdown
+    //[ClientRpc]
+    //void RpcUpdateSubwayConnection(string option)
+    //{
+    //    SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    //}
+
+    //[Command]
+    //void CmdUpdateSubwayConnection(string option)
+    //{
+    //    SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    //}
 
 
-    private void AddOptionsToDropdown(List<string> stationListForSelectedVehicle, Dropdown dropDownForSelectedVehicle, Button takeVehicle)
-    {
-        dropDownForSelectedVehicle.ClearOptions();
-        if (stationListForSelectedVehicle.Count == 0)
-        {
-            takeVehicle.interactable = false;
-        }
-        else
-        {
-            foreach (var station in stationListForSelectedVehicle)
-            {
-                dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
-            }
+    //[ClientRpc]
+    //void RpcClearOptions(string nameOfDropdown)
+    //{
+    //    GameObject.Find(nameOfDropdown).GetComponent<Dropdown>().ClearOptions();
+    //}
 
-            //this switch from 1 to 0 is only to refresh the visual DdMenu
-            dropDownForSelectedVehicle.value = 1;
-            dropDownForSelectedVehicle.value = 0;
-        }
-    }
+    //[Command]
+    //void CmdClearOptions(string nameOfDropdown)
+    //{
+    //    GameObject.Find(nameOfDropdown).GetComponent<Dropdown>().ClearOptions();
+    //}
+
+    //[ClientRpc]
+    //void RpcForceUpdate(string nameOfDropdown)
+    //{
+    //    var dropdown = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
+    //    dropdown.value = 1;
+    //    dropdown.value = 0;
+    //}
+
+    //[Command]
+    //void CmdForceUpdate(string nameOfDropdown)
+    //{
+    //    var dropdown = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
+    //    dropdown.value = 1;
+    //    dropdown.value = 0;
+    //}
+
+
+    //void UpdateUI(Data data)
+    //{
+    //    SubwayInfo.text = data.subway_tickets.ToString();
+    //    BikeInfo.text = data.bike_tickets.ToString();
+    //    BusInfo.text = data.bus_tickets.ToString();
+
+    //    var listOfBikeStations = new List<string>();
+    //    var listOfBusStations = new List<string>();
+    //    var listOfSubwayStations = new List<string>();
+
+    //    foreach (var connection in data.connections)
+    //    {
+    //        switch (connection.type)
+    //        {
+    //            case "bike":
+    //                listOfBikeStations.Add(connection.node_name);
+    //                break;
+    //            case "subway":
+    //                listOfSubwayStations.Add(connection.node_name);
+    //                break;
+    //            case "bus":
+    //                listOfBusStations.Add(connection.node_name);
+    //                break;
+    //            default:
+    //                break;
+    //        }
+
+    //    }
+
+    //    AddOptionsToDropdown(listOfBikeStations, BikeConnectionDropdown, TakeBike);
+    //    AddOptionsToDropdown(listOfBusStations, BusConnectionDropdown, TakeBus);
+    //    AddOptionsToDropdown(listOfSubwayStations, SubwayConnectionDropdown, TakeSubway);
+    //}
+
+
+    //private void AddOptionsToDropdown(List<string> stationListForSelectedVehicle, Dropdown dropDownForSelectedVehicle, Button takeVehicle)
+    //{
+    //    if (isServer)
+    //    {
+    //        dropDownForSelectedVehicle.ClearOptions();
+    //        RpcClearOptions(dropDownForSelectedVehicle.name);
+
+    //        if (stationListForSelectedVehicle.Count == 0)
+    //        {
+    //            takeVehicle.interactable = false;
+    //        }
+    //        else
+    //        {
+    //            foreach (var station in stationListForSelectedVehicle)
+    //            {
+    //                dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
+    //                switch (dropDownForSelectedVehicle.name.ToLower())
+    //                {
+    //                    case "busdropdown":
+    //                        RpcUpdateBusConnection(station);
+    //                        break;
+    //                    case "bikedropdown":
+    //                        RpcUpdateBikeConnection(station);
+    //                        break;
+    //                    case "subwaydropdown":
+    //                        RpcUpdateSubwayConnection(station);
+    //                        break;
+    //                    default:
+    //                        break;
+    //                }
+    //            }
+
+    //            //this switch from 1 to 0 is only to refresh the visual DdMenu
+    //            dropDownForSelectedVehicle.value = 1;
+    //            dropDownForSelectedVehicle.value = 0;
+
+    //            RpcForceUpdate(dropDownForSelectedVehicle.name);
+    //        }
+    //    }
+
+    //    if (isLocalPlayer)
+    //    {
+
+    //        dropDownForSelectedVehicle.ClearOptions();
+    //        CmdClearOptions(dropDownForSelectedVehicle.name);
+
+    //        if (stationListForSelectedVehicle.Count == 0)
+    //        {
+    //            takeVehicle.interactable = false;
+    //        }
+    //        else
+    //        {
+    //            foreach (var station in stationListForSelectedVehicle)
+    //            {
+    //                dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
+    //                switch (dropDownForSelectedVehicle.name.ToLower())
+    //                {
+    //                    case "busdropdown":
+    //                        CmdUpdateBusConnection(station);
+    //                        break;
+    //                    case "bikedropdown":
+    //                        CmdUpdateBikeConnection(station);
+    //                        break;
+    //                    case "subwaydropdown":
+    //                        CmdUpdateSubwayConnection(station);
+    //                        break;
+    //                    default:
+    //                        break;
+    //                }
+    //            }
+
+    //            //this switch from 1 to 0 is only to refresh the visual DdMenu
+    //            dropDownForSelectedVehicle.value = 1;
+    //            dropDownForSelectedVehicle.value = 0;
+
+    //            CmdForceUpdate(dropDownForSelectedVehicle.name);
+    //        }
+
+    //    }
+            
+    //}
+
+
 
     public void OnTakeBus()
     {
@@ -121,7 +245,7 @@ public class UIActualizer : NetworkBehaviour
 
     public void OnTakeBike(KeyValuePair<string, string> playerNamePlayerValue)
     {
-        var nextStation = GameObject.Find("BikeConnectionsDropdown").GetComponent<Dropdown>();
+        var nextStation = GameObject.Find("BikeDropdown").GetComponent<Dropdown>();
         SetupLocalPlayer.PlayerNamePlayerPosition[playerNamePlayerValue.Key] = nextStation.captionText.text;
 
         Debug.Log("User wants to go to station " + nextStation.captionText.text);

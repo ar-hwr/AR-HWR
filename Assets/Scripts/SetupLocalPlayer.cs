@@ -31,13 +31,28 @@ public class SetupLocalPlayer : NetworkBehaviour
     [HideInInspector]
     public static string Players;
 
+    //public Text BikeInfo;
+
+
+
+
+
+    public Text SubwayInfo;
     public Text BikeInfo;
+    public Text BusInfo;
+    public Dropdown BusConnectionDropdown;
+    public Dropdown BikeConnectionDropdown;
+    public Dropdown SubwayConnectionDropdown;
+    public Button TakeBus;
+    public Button TakeBike;
+    public Button TakeSubway;
+
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-
         Debug.Log(PlayerName);
         Debug.Log(SerializedDictionary);
 
@@ -46,8 +61,219 @@ public class SetupLocalPlayer : NetworkBehaviour
             RenderPlayer(player);
             Debug.Log(player.Key + " " + player.Value);
         }
-        UIActualizer uiActualizer = new UIActualizer();
+
+        GetRequestHandler getRequestHandler = new GetRequestHandler();
+        //StartCoroutine(getRequestHandler.GetText2(SubwayInfo, result => UpdateUI(result)));
+        //StartCoroutine(getRequestHandler.GetText2(SubwayInfo, result => UpdateUI(result)));
+        StartCoroutine(getRequestHandler.FetchResponseFromWeb(SubwayInfo, result => UpdateUI(result)));
     }
+
+
+    //updating bus dropdown
+    [ClientRpc]
+    void RpcUpdateBusConnection(string option)
+    {
+        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    }
+
+    [Command]
+    void CmdUpdateBusConnection(string option)
+    {
+        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    }
+
+    //updating bike dropdown
+    [ClientRpc]
+    void RpcUpdateBikeConnection(string option)
+    {
+        BikeConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    }
+
+    [Command]
+    void CmdUpdateBikeConnection(string option)
+    {
+        BikeConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    }
+
+    //updating subway dropdown
+    [ClientRpc]
+    void RpcUpdateSubwayConnection(string option)
+    {
+        SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    }
+
+    [Command]
+    void CmdUpdateSubwayConnection(string option)
+    {
+        SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
+    }
+
+
+    [ClientRpc]
+    void RpcClearOptions(string nameOfDropdown)
+    {
+        GameObject.Find(nameOfDropdown).GetComponent<Dropdown>().ClearOptions();
+    }
+
+    [Command]
+    void CmdClearOptions(string nameOfDropdown)
+    {
+        GameObject.Find(nameOfDropdown).GetComponent<Dropdown>().ClearOptions();
+    }
+
+    [ClientRpc]
+    void RpcForceUpdate(string nameOfDropdown)
+    {
+        var dropdown = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
+        dropdown.value = 1;
+        dropdown.value = 0;
+    }
+
+    [Command]
+    void CmdForceUpdate(string nameOfDropdown)
+    {
+        var dropdown = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
+        dropdown.value = 1;
+        dropdown.value = 0;
+    }
+
+
+    void UpdateUI(Data data)
+    {
+        SubwayInfo.text = data.subway_tickets.ToString();
+        SubwayInfo.text = data.connections.ToString();
+        BikeInfo.text = data.bike_tickets.ToString();
+        BusInfo.text = data.bus_tickets.ToString();
+
+        var listOfBikeStations = new List<string>();
+        var listOfBusStations = new List<string>();
+        var listOfSubwayStations = new List<string>();
+
+        foreach (var connection in data.connections)
+        {
+            switch (connection.type)
+            {
+                case "bike":
+                    listOfBikeStations.Add(connection.node_name);
+                    break;
+                case "subway":
+                    listOfSubwayStations.Add(connection.node_name);
+                    break;
+                case "bus":
+                    listOfBusStations.Add(connection.node_name);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        AddOptionsToDropdown(listOfBikeStations, BikeConnectionDropdown, TakeBike);
+        AddOptionsToDropdown(listOfBusStations, BusConnectionDropdown, TakeBus);
+        AddOptionsToDropdown(listOfSubwayStations, SubwayConnectionDropdown, TakeSubway);
+    }
+
+
+    private void AddOptionsToDropdown(List<string> stationListForSelectedVehicle, Dropdown dropDownForSelectedVehicle, Button takeVehicle)
+    {
+        //dropDownForSelectedVehicle.ClearOptions();
+        //RpcClearOptions(dropDownForSelectedVehicle.name);
+
+        if (stationListForSelectedVehicle.Count == 0)
+        {
+            takeVehicle.interactable = false;
+        }
+        else
+        {
+            foreach (var station in stationListForSelectedVehicle)
+            {
+                dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
+          
+            }
+
+            //this switch from 1 to 0 is only to refresh the visual DdMenu
+            dropDownForSelectedVehicle.value = 1;
+            dropDownForSelectedVehicle.value = 0;
+        }
+
+
+        if (isServer)
+        {
+            //dropDownForSelectedVehicle.ClearOptions();
+            //RpcClearOptions(dropDownForSelectedVehicle.name);
+
+            if (stationListForSelectedVehicle.Count == 0)
+            {
+                takeVehicle.interactable = false;
+            }
+            else
+            {
+                foreach (var station in stationListForSelectedVehicle)
+                {
+                    dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
+                    switch (dropDownForSelectedVehicle.name.ToLower())
+                    {
+                        case "busdropdown":
+                            RpcUpdateBusConnection(station);
+                            break;
+                        case "bikedropdown":
+                            RpcUpdateBikeConnection(station);
+                            break;
+                        case "subwaydropdown":
+                            RpcUpdateSubwayConnection(station);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                //this switch from 1 to 0 is only to refresh the visual DdMenu
+                dropDownForSelectedVehicle.value = 1;
+                dropDownForSelectedVehicle.value = 0;
+
+                RpcForceUpdate(dropDownForSelectedVehicle.name);
+            }
+        }
+
+        if (isLocalPlayer)
+        {
+            //dropDownForSelectedVehicle.ClearOptions();
+            //CmdClearOptions(dropDownForSelectedVehicle.name);
+
+            if (stationListForSelectedVehicle.Count == 0)
+            {
+                takeVehicle.interactable = false;
+            }
+            else
+            {
+                foreach (var station in stationListForSelectedVehicle)
+                {
+                    dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
+                    switch (dropDownForSelectedVehicle.name.ToLower())
+                    {
+                        case "busdropdown":
+                            CmdUpdateBusConnection(station);
+                            break;
+                        case "bikedropdown":
+                            CmdUpdateBikeConnection(station);
+                            break;
+                        case "subwaydropdown":
+                            CmdUpdateSubwayConnection(station);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                //this switch from 1 to 0 is only to refresh the visual DdMenu
+                dropDownForSelectedVehicle.value = 1;
+                dropDownForSelectedVehicle.value = 0;
+
+                CmdForceUpdate(dropDownForSelectedVehicle.name);
+            }
+        }
+    }
+
 
     void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition, bool deleteFromScene = false)
     {
@@ -98,11 +324,8 @@ public class SetupLocalPlayer : NetworkBehaviour
     {
         try
         {
-            BikeInfo.text = value + "/" + key;
             var playerToRender = GameObject.Find(value + "/" + key);
-            //BikeInfo.text = string.Empty;
-            //BikeInfo.text = "Rcp Hide Player found gameobject with name" + playerToRender.name;
-            //playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
         }
         catch (Exception e)
         {
@@ -113,7 +336,6 @@ public class SetupLocalPlayer : NetworkBehaviour
     [Command]
     public void CmdRenderPlayer(string key, string value)
     {
-        //BikeInfo.text = "Cmd searching for gameobject " + value + "/" + key;
         var playerToRender = GameObject.Find(value + "/" + key);
         playerToRender.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
@@ -122,21 +344,15 @@ public class SetupLocalPlayer : NetworkBehaviour
     [ClientRpc]
     public void RpcHidePlayer(string key, string value)
     {
-        BikeInfo.text = "Rcp searching for gameobject " + value + "/" + key;
-
         try
         {
-            BikeInfo.text = value + "/" + key;
             var playerToRender = GameObject.Find(value + "/" + key);
-            //BikeInfo.text = string.Empty;
-            //BikeInfo.text = "Rcp Hide Player found gameobject with name" + playerToRender.name;
-            //playerToRender.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+            playerToRender.GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
         }
         catch (Exception e)
         {
             BikeInfo.text = e.Message;
         }
-
     }
 
     [Command]
@@ -164,7 +380,6 @@ public class SetupLocalPlayer : NetworkBehaviour
     public void OnTakeBike()
     {
         ActualizeDictionary(SerializedDictionary);
-
 
         RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), true);
         UIActualizer actualizer = new UIActualizer();

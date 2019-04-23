@@ -14499,7 +14499,6 @@ GameObject:
   - component: {fileID: 1875594761}
   - component: {fileID: 1875594760}
   - component: {fileID: 1875594759}
-  - component: {fileID: 1875594762}
   m_Layer: 0
   m_Name: BikeConnectionsDropdown
   m_TagString: Untagged
@@ -14622,27 +14621,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875594757}
   m_CullTransparentMesh: 0
---- !u!114 &1875594762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875594757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 626bf35516bb60647b04241aef090e54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SubwayInfo: {fileID: 1623467084}
-  BikeInfo: {fileID: 1630822375}
-  BusInfo: {fileID: 1034066634}
-  BusConnectionDropdown: {fileID: 673235668}
-  BikeConnectionDropdown: {fileID: 1875594759}
-  SubwayConnectionDropdown: {fileID: 1420416100}
-  TakeBus: {fileID: 382561404}
-  TakeBike: {fileID: 564633200}
-  TakeSubway: {fileID: 1553677569}
 --- !u!43 &1900183679
 Mesh:
   m_ObjectHideFlags: 0
