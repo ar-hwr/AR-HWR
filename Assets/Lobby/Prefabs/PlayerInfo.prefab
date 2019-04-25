@@ -373,7 +373,6 @@ GameObject:
   - component: {fileID: 22273042}
   - component: {fileID: 11486682}
   - component: {fileID: 11487112}
-  - component: {fileID: 3103951279868186855}
   m_Layer: 5
   m_Name: PlayerName
   m_TagString: Untagged
@@ -503,20 +502,6 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
---- !u!114 &3103951279868186855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d7f276b6da891246854cfeebdc0ef0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerN: {fileID: 0}
-  joinButton: {fileID: 11413860}
 --- !u!1 &131638
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,10 +598,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0, b: 0.39607847, a: 1}
-    m_HighlightedColor: {r: 1, g: 0, b: 0.39607847, a: 1}
-    m_PressedColor: {r: 1, g: 0, b: 0.39607847, a: 1}
-    m_DisabledColor: {r: 1, g: 0, b: 0.39607847, a: 0.5019608}
+    m_NormalColor: {r: 0.1882353, g: 0.4745098, b: 0.8392157, a: 1}
+    m_HighlightedColor: {r: 0.2956123, g: 0.5431433, b: 0.8584906, a: 1}
+    m_PressedColor: {r: 0.12615699, g: 0.40672076, b: 0.764151, a: 1}
+    m_DisabledColor: {r: 0.38314348, g: 0.50505966, b: 0.6603774, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.2
   m_SpriteState:
@@ -633,7 +618,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3103951279868186855}
+      - m_Target: {fileID: 0}
         m_MethodName: OnJoin
         m_Mode: 1
         m_Arguments:
@@ -1427,10 +1412,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0, b: 0.39607847, a: 1}
-    m_HighlightedColor: {r: 1, g: 0, b: 0.39607847, a: 1}
-    m_PressedColor: {r: 1, g: 0, b: 0.39607847, a: 1}
-    m_DisabledColor: {r: 0.63235295, g: 0.61375433, b: 0.61375433, a: 1}
+    m_NormalColor: {r: 0.63082945, g: 0.44499823, b: 0.754717, a: 1}
+    m_HighlightedColor: {r: 0.66781956, g: 0.4986205, b: 0.7830189, a: 1}
+    m_PressedColor: {r: 0.5660603, g: 0.3721075, b: 0.6981132, a: 1}
+    m_DisabledColor: {r: 0.5347887, g: 0.4750356, b: 0.5754717, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.2
   m_SpriteState:

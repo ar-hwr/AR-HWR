@@ -267,7 +267,7 @@ Transform:
   m_GameObject: {fileID: 340754392277446772}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.08946095, y: 0.03, z: -0.07142885}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.099999994, y: 0.10000007, z: 0.10000007}
   m_Children: []
   m_Father: {fileID: 351640941038529074}
   m_RootOrder: 0
@@ -287,7 +287,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340754392277446772}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -556,9 +556,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831028922398886413}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.106, y: 0.03, z: -0.084}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.106001794, y: 0.03, z: -0.08399981}
+  m_LocalScale: {x: 0.099999994, y: 0.10000007, z: 0.10000007}
   m_Children: []
   m_Father: {fileID: 351640941038529074}
   m_RootOrder: 3
@@ -751,8 +751,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2169463637668729400}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0726052, y: -0.012, z: -0.068001024}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0.0726052, y: -0.012000001, z: -0.068001024}
+  m_LocalScale: {x: 0.099999994, y: 0.10000007, z: 0.10000007}
   m_Children: []
   m_Father: {fileID: 351640941038529074}
   m_RootOrder: 4
@@ -990,8 +990,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3349962020883076879}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.09260537, y: -0.0069999998, z: -0.09200033}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0.09260537, y: -0.006999999, z: -0.09200033}
+  m_LocalScale: {x: 0.099999994, y: 0.10000007, z: 0.10000007}
   m_Children: []
   m_Father: {fileID: 351640941038529074}
   m_RootOrder: 2
@@ -1909,7 +1909,7 @@ Transform:
   m_GameObject: {fileID: 6975092340337111734}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.09960498, y: -0.017999997, z: -0.05199999}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.099999994, y: 0.10000007, z: 0.10000007}
   m_Children: []
   m_Father: {fileID: 351640941038529074}
   m_RootOrder: 1
@@ -3033,6 +3033,7 @@ GameObject:
   - component: {fileID: 3671721618055834497}
   - component: {fileID: 203398521598810407}
   - component: {fileID: 5158587858495431222}
+  - component: {fileID: 3730031091360288203}
   m_Layer: 0
   m_Name: Schloss Charlottenburg
   m_TagString: Untagged
@@ -3160,6 +3161,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619da496da957474498318d7f98837df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3730031091360288203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9033974806921282130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884b71f6001654140ac77c6fd15c869b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StationName: Schloss Charlottenburg
+  Thief: {fileID: 340754392277446772}
+  YellowPolice: {fileID: 6975092340337111734}
+  RedPolice: {fileID: 3349962020883076879}
+  BluePolice: {fileID: 1831028922398886413}
+  GreenPolice: {fileID: 2169463637668729400}
 --- !u!1 &9161937704283197187
 GameObject:
   m_ObjectHideFlags: 0
