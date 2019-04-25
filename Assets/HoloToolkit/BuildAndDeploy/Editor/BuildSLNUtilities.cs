@@ -137,7 +137,7 @@ namespace HoloToolkit.Unity
             }
 
             // For the WSA player, Unity builds into a target directory.
-            // For other players, the OutputPath parameter indicates the
+            // For other Players, the OutputPath parameter indicates the
             // path to the target executable to build.
             if (buildInfo.BuildTarget == BuildTarget.WSAPlayer)
             {

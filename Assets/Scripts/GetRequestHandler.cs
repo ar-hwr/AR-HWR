@@ -1,51 +1,30 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Networking;
-
-
-/// <summary>
-/// Class representing the object structure which comes from the server
-/// TODO move this to another .cs file
-/// </summary>
-[System.Serializable]
-public class Test
-{
-    public string userId;
-    public byte id;
-    public string title;
-    public bool completed;
-}
 
 public class GetRequestHandler : MonoBehaviour
 {
-    /// <summary>
-    /// Basic method for get requests to server
-    /// </summary>
-    /// <param name="result">contains the server's response</param>
-    /// <returns>the server's response or an error code as soon as the server answers (yield)</returns>
-    /// 
     // set server url of custom API here
-    private string serverURL = "https://jsonplaceholder.typicode.com/todos/1";
+    private string serverURL2 = "http://finalnothing.net:9292/players/2";
+    private string serverURL1 = "http://finalnothing.net:9292/players/1";
 
-    public IEnumerator GetText(Action<Test> result)
+    /// <summary>
+    /// Simple get request to server
+    /// </summary>
+    /// <param name="callback">What to do with the requests answer</param>
+    /// <returns></returns>
+    public IEnumerator FetchResponseFromWeb(Action<Data> callback)
     {
-        // user UnityWebRequest and not Core WebRequests when working with Unity
-        UnityWebRequest request = UnityWebRequest.Get(serverURL);
-        yield return request.SendWebRequest();
+        WWW www = new WWW(serverURL2);
+        yield return www;
 
-        if (request.isNetworkError || request.isHttpError)
+        if (www.error != null)
         {
-            UnityEngine.Debug.Log(request.error);
+            callback(new Data());
         }
         else
         {
-            if (result != null)
-            {
-                Test test = JsonConvert.DeserializeObject<Test>(request.downloadHandler.text);
-                result(test);
-            }
+            callback(JsonUtility.FromJson<Data>(www.text));
         }
     }
 }

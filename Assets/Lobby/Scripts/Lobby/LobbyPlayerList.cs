@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Prototype.NetworkLobby
 {
-    //List of players in the lobby
+    //List of Players in the lobby
     public class LobbyPlayerList : MonoBehaviour
     {
         public static LobbyPlayerList _instance = null;
