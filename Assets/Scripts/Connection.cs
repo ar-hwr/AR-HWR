@@ -6,5 +6,6 @@ public class Connection
 {
     public byte id;
     public string type;
-    public string node_name;
+    public string destination_name;
+    public byte destination_id;
 }

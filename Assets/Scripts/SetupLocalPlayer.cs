@@ -156,13 +156,13 @@ public class SetupLocalPlayer : NetworkBehaviour
             switch (connection.type)
             {
                 case "bike":
-                    listOfBikeStations.Add(connection.node_name);
+                    listOfBikeStations.Add(connection.destination_name);
                     break;
                 case "subway":
-                    listOfSubwayStations.Add(connection.node_name);
+                    listOfSubwayStations.Add(connection.destination_name);
                     break;
                 case "bus":
-                    listOfBusStations.Add(connection.node_name);
+                    listOfBusStations.Add(connection.destination_name);
                     break;
                 default:
                     break;

@@ -20,9 +20,6 @@ public class ManagePlayerMarkers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (var playerPosition in SetupLocalPlayer.pPositions)
-        {
-        }
 
     }
 }
