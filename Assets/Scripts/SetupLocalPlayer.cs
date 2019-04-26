@@ -13,11 +13,14 @@ public class Player
     public Color Color;
     public string Prefab;
     public string Position;
+    public byte BusTickets = 5;
+    public byte BikeTickets = 5;
+    public byte SubwayTickets = 5;
 }
 
 public class SetupLocalPlayer : NetworkBehaviour
 {
-    public List<Player> PlayerList = new List<Player>();
+    public static List<Player> PlayerList = new List<Player>();
 
     [SyncVar]
     public string WhoseTurnIsIt;
@@ -38,21 +41,46 @@ public class SetupLocalPlayer : NetworkBehaviour
     [HideInInspector]
     public static string Players;
 
+
+    public byte PlayerIndex;
+
     //referencing UI
-    public Text SubwayInfo;
-    public Text BusInfo;
-    public Text BikeInfo;
+    private Text SubwayTicketsInfo;
+    private Text BusTicketsInfo;
+    private Text BikeTicketsInfo;
     public Text TurnInfo;
-    public Dropdown BusConnectionDropdown;
-    public Dropdown BikeConnectionDropdown;
-    public Dropdown SubwayConnectionDropdown;
-    public Button TakeBus;
-    public Button TakeBike;
-    public Button TakeSubway;
+    private Text PlayerNameInfo;
+    private Text PlayerColorInfo;
+    private Text PlayerPrefabInfo;
+    private Text PlayerPositionInfo;
+    private Dropdown BusConnectionDropdown;
+    private Dropdown BikeConnectionDropdown;
+    private Dropdown SubwayConnectionDropdown;
+    private Button TakeBus;
+    private Button TakeBike;
+    private Button TakeSubway;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        SubwayTicketsInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
+        BusTicketsInfo = GameObject.Find("BusTicketsInfo").GetComponent<Text>();
+        BikeTicketsInfo = GameObject.Find("BikeTicketsInfo").GetComponent<Text>();
+        //TurnInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
+        PlayerNameInfo = GameObject.Find("PlayerNameInfo").GetComponent<Text>();
+        PlayerColorInfo = GameObject.Find("PlayerColorInfo").GetComponent<Text>();
+        PlayerPrefabInfo = GameObject.Find("PlayerPrefabInfo").GetComponent<Text>();
+        PlayerPositionInfo = GameObject.Find("PlayerPositionInfo").GetComponent<Text>();
+        BusConnectionDropdown = GameObject.Find("BusConnectionsDropdown").GetComponent<Dropdown>();
+        BikeConnectionDropdown = GameObject.Find("BikeConnectionsDropdown").GetComponent<Dropdown>();
+        SubwayConnectionDropdown = GameObject.Find("SubwayConnectionsDropdown").GetComponent<Dropdown>();
+        TakeBus = GameObject.Find("BusButton").GetComponent<Button>();
+        TakeBike = GameObject.Find("BikeButton").GetComponent<Button>();
+        TakeSubway = GameObject.Find("SubwayButton").GetComponent<Button>();
+
+
         foreach (var player in PlayerList)
         {
             Debug.Log("\nCreated player with these attributes");
@@ -66,6 +94,11 @@ public class SetupLocalPlayer : NetworkBehaviour
         }
 
 
+
+
+        PlayerIndex = 0;
+        ShowPlayerData();
+
         //Debug.Log(SerializedDictionary);
 
         //PlayerNamePlayerPosition.Clear();
@@ -75,18 +108,53 @@ public class SetupLocalPlayer : NetworkBehaviour
 
         //WhoseTurnIsIt = PlayerPrefabs.First();
         //TurnInfo.text = WhoseTurnIsIt;
-        
+
         GetRequestHandler getRequestHandler = new GetRequestHandler();
         StartCoroutine(getRequestHandler.FetchResponseFromWeb(result => UpdateUI(result)));
+    }
+
+    public void ShowPlayerData()
+    {
+        var pl = PlayerList.ElementAt(PlayerIndex);
+
+        SubwayTicketsInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
+        BusTicketsInfo = GameObject.Find("BusTicketsInfo").GetComponent<Text>();
+        BikeTicketsInfo = GameObject.Find("BikeTicketsInfo").GetComponent<Text>();
+        //TurnInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
+        PlayerNameInfo = GameObject.Find("PlayerNameInfo").GetComponent<Text>();
+        PlayerColorInfo = GameObject.Find("PlayerColorInfo").GetComponent<Text>();
+        PlayerPrefabInfo = GameObject.Find("PlayerPrefabInfo").GetComponent<Text>();
+        PlayerPositionInfo = GameObject.Find("PlayerPositionInfo").GetComponent<Text>();
+
+        PlayerNameInfo.text = pl.Name;
+        PlayerColorInfo.text = pl.Color.ToString();
+        PlayerPrefabInfo.text = pl.Prefab;
+        PlayerPositionInfo.text = pl.Position;
+        SubwayTicketsInfo.text = pl.SubwayTickets.ToString();
+        BusTicketsInfo.text = pl.BusTickets.ToString();
+        BikeTicketsInfo.text = pl.BikeTickets.ToString();
+    }
+
+    public void OnNextPlayer()
+    {
+        if (PlayerIndex < PlayerList.Count-1)
+        {
+            PlayerIndex++;
+        }
+        else
+        {
+            PlayerIndex = 0;
+        }
+        ShowPlayerData();
     }
 
 
 
     void UpdateUI(Data data)
     {
-        SubwayInfo.text = data.subway_tickets.ToString();
-        //BikeInfo.text = data.bike_tickets.ToString();
-        BusInfo.text = data.bus_tickets.ToString();
+        //SubwayTicketsInfo.text = data.subway_tickets.ToString();
+        //BikeTicketsInfo.text = data.bike_tickets.ToString();
+        //BusTicketsInfo.text = data.bus_tickets.ToString();
 
         var listOfBikeStations = new List<string>();
         var listOfBusStations = new List<string>();
@@ -243,8 +311,16 @@ public class SetupLocalPlayer : NetworkBehaviour
         GetNextElement(WhoseTurnIsIt);
 
         //RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), true);
-        UIActualizer actualizer = new UIActualizer();
-        actualizer.OnTakeVehicle(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), nameOfDropdown);
+
+
+        var nextStation = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
+        SetupLocalPlayer.PlayerNamePlayerPosition[PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab).Key] = nextStation.captionText.text;
+
+
+
+        Debug.Log("User wants to go to station " + nextStation.captionText.text);
+
+
 
         SerializedDictionary = customSerialize(PlayerNamePlayerPosition);
         ActualizeDictionary(SerializedDictionary);

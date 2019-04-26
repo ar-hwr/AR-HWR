@@ -115,7 +115,7 @@ public class NetworkLobbyHook : LobbyHook
         Random rand = new Random();
         int stIndex = random.Next(0, Stations.Count - 1);
         createdPlayer.Position = Stations[stIndex];
-        localPlayer.PlayerList.Add(createdPlayer);
+        SetupLocalPlayer.PlayerList.Add(createdPlayer);
     }
 }
 
