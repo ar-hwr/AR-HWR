@@ -10,15 +10,11 @@ public class SetupLocalPlayer : NetworkBehaviour
     [SyncVar]
     public int bikes = 5;
 
-
-    [SyncVar(hook = "OnSubwayChange")]
-    public int subwayMoves = 4;
-
     [SyncVar]
     public string PlayerName;
 
     [SyncVar]
-    public String WhoseTurnIsIt;
+    public string WhoseTurnIsIt;
 
     public static Dictionary<string, string> PlayerNamePlayerPosition = new Dictionary<string, string>();
     public List<string> PlayerPrefabs = new List<string>();
@@ -33,8 +29,6 @@ public class SetupLocalPlayer : NetworkBehaviour
     [HideInInspector]
     public string PlayerPrefab;
 
-    //[SyncVar(hook = "OnChangePlayerList")]
-    //[SyncVar]
     [HideInInspector]
     public static string Players;
 
@@ -66,13 +60,12 @@ public class SetupLocalPlayer : NetworkBehaviour
             Debug.Log(player.Key + " " + player.Value);
 
             PlayerPrefabs.Add(player.Key);
-
         }
 
 
         WhoseTurnIsIt = PlayerPrefabs.First();
+        TurnInfo.text = WhoseTurnIsIt;
         
-
         GetRequestHandler getRequestHandler = new GetRequestHandler();
         StartCoroutine(getRequestHandler.FetchResponseFromWeb(result => UpdateUI(result)));
     }
@@ -150,7 +143,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     [Command]
     void CmdForceUpdate(string nameOfDropdown)
     {
-        networedUpdate(nameOfDropdown);
+        RpcForceUpdate(nameOfDropdown);
     }
 
     private void networedUpdate(string nameOfDropdown)
@@ -196,9 +189,32 @@ public class SetupLocalPlayer : NetworkBehaviour
 
 
     private void AddOptionsToDropdown(List<string> stationListForSelectedVehicle, Dropdown dropDownForSelectedVehicle, Button takeVehicle)
+    {      
+        FillDropdown(stationListForSelectedVehicle, takeVehicle, dropDownForSelectedVehicle);
+        if (isServer)
+        {
+            FillDropdown(stationListForSelectedVehicle, takeVehicle, dropDownForSelectedVehicle);
+            if (stationListForSelectedVehicle.Count != 0)
+            {
+                RpcForceUpdate(dropDownForSelectedVehicle.name);
+            }
+        }
+
+        if (isLocalPlayer)
+        {
+            FillDropdown(stationListForSelectedVehicle, takeVehicle, dropDownForSelectedVehicle);
+            if (stationListForSelectedVehicle.Count != 0)
+            {
+                CmdForceUpdate(dropDownForSelectedVehicle.name);
+            }
+        }
+    }
+
+
+    private void FillDropdown(List<string> stationListForSelectedVehicle, Button takeVehicle, Dropdown dropDownForSelectedVehicle)
     {
         //dropDownForSelectedVehicle.ClearOptions();
-        //RpcClearOptions(dropDownForSelectedVehicle.name);
+        //CmdClearOptions(dropDownForSelectedVehicle.name);
 
         if (stationListForSelectedVehicle.Count == 0)
         {
@@ -209,92 +225,27 @@ public class SetupLocalPlayer : NetworkBehaviour
             foreach (var station in stationListForSelectedVehicle)
             {
                 dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
-
+                switch (dropDownForSelectedVehicle.name)
+                {
+                    case "BusDropdown":
+                        CmdUpdateBusConnection(station);
+                        break;
+                    case "BikeDropdown":
+                        CmdUpdateBikeConnection(station);
+                        break;
+                    case "SubwayDropdown":
+                        CmdUpdateSubwayConnection(station);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             //this switch from 1 to 0 is only to refresh the visual DdMenu
             dropDownForSelectedVehicle.value = 1;
             dropDownForSelectedVehicle.value = 0;
         }
-
-
-        if (isServer)
-        {
-            //dropDownForSelectedVehicle.ClearOptions();
-            //RpcClearOptions(dropDownForSelectedVehicle.name);
-
-            if (stationListForSelectedVehicle.Count == 0)
-            {
-                takeVehicle.interactable = false;
-            }
-            else
-            {
-                foreach (var station in stationListForSelectedVehicle)
-                {
-                    dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
-                    switch (dropDownForSelectedVehicle.name)
-                    {
-                        case "BusDropdown":
-                            RpcUpdateBusConnection(station);
-                            break;
-                        case "BikeDropdown":
-                            RpcUpdateBikeConnection(station);
-                            break;
-                        case "SubwayDropdown":
-                            RpcUpdateSubwayConnection(station);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                //this switch from 1 to 0 is only to refresh the visual DdMenu
-                dropDownForSelectedVehicle.value = 1;
-                dropDownForSelectedVehicle.value = 0;
-
-                RpcForceUpdate(dropDownForSelectedVehicle.name);
-            }
-        }
-
-        if (isLocalPlayer)
-        {
-            //dropDownForSelectedVehicle.ClearOptions();
-            //CmdClearOptions(dropDownForSelectedVehicle.name);
-
-            if (stationListForSelectedVehicle.Count == 0)
-            {
-                takeVehicle.interactable = false;
-            }
-            else
-            {
-                foreach (var station in stationListForSelectedVehicle)
-                {
-                    dropDownForSelectedVehicle.options.Add(new Dropdown.OptionData() { text = station });
-                    switch (dropDownForSelectedVehicle.name)
-                    {
-                        case "BusDropdown":
-                            CmdUpdateBusConnection(station);
-                            break;
-                        case "BikeDropdown":
-                            CmdUpdateBikeConnection(station);
-                            break;
-                        case "SubwayDropdown":
-                            CmdUpdateSubwayConnection(station);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                //this switch from 1 to 0 is only to refresh the visual DdMenu
-                dropDownForSelectedVehicle.value = 1;
-                dropDownForSelectedVehicle.value = 0;
-
-                CmdForceUpdate(dropDownForSelectedVehicle.name);
-            }
-        }
     }
-
 
     void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition, bool deleteFromScene = false)
     {
@@ -310,6 +261,26 @@ public class SetupLocalPlayer : NetworkBehaviour
                 GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 RpcRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
             }
+        }
+
+        try
+        {
+            if (deleteFromScene)
+            {
+                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key)
+                    .GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+                CmdHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+            }
+            else
+            {
+                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key)
+                    .GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log("is no local player");
         }
 
         if (isLocalPlayer)
@@ -355,7 +326,6 @@ public class SetupLocalPlayer : NetworkBehaviour
         RpcRenderPlayer(key, value);
     }
 
-
     [ClientRpc]
     public void RpcHidePlayer(string key, string value)
     {
@@ -381,7 +351,6 @@ public class SetupLocalPlayer : NetworkBehaviour
         PlayerNamePlayerPosition = customDeserialize(serializedDict);
     }
 
-
     public void OnTakeBus()
     {
         OnTakeVehicle("BusDropdown");
@@ -389,15 +358,13 @@ public class SetupLocalPlayer : NetworkBehaviour
 
     public void OnTakeBike()
     {
-        OnTakeVehicle("BikeDropdown");
-      
+        OnTakeVehicle("BikeDropdown");    
     }
 
     public void OnTakeSubway()
     {
         OnTakeVehicle("SubwayDropdown");
     }
-
 
     public void OnTakeVehicle(string nameOfDropdown)
     {
@@ -451,22 +418,18 @@ public class SetupLocalPlayer : NetworkBehaviour
             index++;
 
 
-
         WhoseTurnIsIt = PlayerPrefabs[index];
 
 
         if (isServer)
         {
-            RpcSetWhoseTurn(PlayerPrefabs[index]);
+            RpcSetWhoseTurn(WhoseTurnIsIt);
         }
 
         if (isLocalPlayer)
         {
-            CmdSetWhoseTurn(PlayerPrefabs[index]);
+            CmdSetWhoseTurn(WhoseTurnIsIt);
         }
-
-
-
         TurnInfo.text = WhoseTurnIsIt;
     }
 
@@ -482,7 +445,6 @@ public class SetupLocalPlayer : NetworkBehaviour
         WhoseTurnIsIt = who;
     }
 
-
     [Command]
     private void CmdGetNextElement(string player)
     {
@@ -496,47 +458,6 @@ public class SetupLocalPlayer : NetworkBehaviour
        GetNextElement(player);
     }
 
-
-    private void DecrementSubwayMoves(int number)
-    {
-        subwayMoves -= number;
-    }
-
-    [Command]
-    private void CmdDecrementSubwayMoves(int number)
-    {
-        RpcDecrementSubwayMoves(number);
-    }
-
-    [ClientRpc]
-    private void RpcDecrementSubwayMoves(int number)
-    {
-        subwayMoves -= number;
-    }
-
-    private void OnSubwayChange(int number)
-    {
-        if (isServer)
-            SubwayInfo.text = number.ToString();
-
-        if (isLocalPlayer)
-            SubwayInfo.text = number.ToString();
-
-
-        SubwayInfo.text = number.ToString();
-
-        if (isServer)
-        {
-            SubwayInfo.text = number.ToString();
-            RpcSetDebugText(number.ToString());
-        }
-
-        if (isLocalPlayer)
-            CmdSetDebugText(number.ToString());
-
-    }
-
-
     public void CalculateNextPlayer()
     {
         var WhoseTurnThisRound = WhoseTurnIsIt;
@@ -546,34 +467,12 @@ public class SetupLocalPlayer : NetworkBehaviour
             RpcGetNextElement(WhoseTurnThisRound);
         }
 
-
         if (isLocalPlayer)
         {
             GetNextElement(WhoseTurnThisRound);
             CmdGetNextElement(WhoseTurnThisRound);
         }
-
     }
-
-    [Command]
-    private void CmdSetDebugText(string text)
-    {
-        RpcSetDebugText(text);
-    }
-
-    [ClientRpc]
-    private void RpcSetDebugText(string text)
-    {
-        SubwayInfo.text = text;
-    }
-
-
-
-
-
-
-
-
 
     public void ClickTest()
     {
@@ -581,45 +480,23 @@ public class SetupLocalPlayer : NetworkBehaviour
         if (isServer)
         {
             BikeInfo.text = bikes.ToString();
-            if (bikes % 2 == 0)
-            {
-                Anzeige.interactable = false;
-            }
-            else
-            {
-                Anzeige.interactable = true;
-            }
+            showHideAnzeigeButton();
             RpcPrintVar(bikes.ToString());
         }
 
         if (isLocalPlayer)
         {
             BikeInfo.text = bikes.ToString();
-            if (bikes % 2 == 0)
-            {
-                Anzeige.interactable = false;
-            }
-            else
-            {
-                Anzeige.interactable = true;
-            }
+            showHideAnzeigeButton();
             CmdPrintVar(bikes.ToString());
         }
     }
-
 
     [Command]
     private void CmdPrintVar(string text)
     {
         BikeInfo.text = text;
-        if (bikes % 2 == 0)
-        {
-            Anzeige.interactable = false;
-        }
-        else
-        {
-            Anzeige.interactable = true;
-        }
+        showHideAnzeigeButton();
         RpcPrintVar(text);
     }
 
@@ -627,15 +504,15 @@ public class SetupLocalPlayer : NetworkBehaviour
     private void RpcPrintVar(string text)
     {
         bikes = Convert.ToInt32(text);
-        BikeInfo.text = bikes.ToString();
-        if (bikes % 2 == 0)
-        {
-            Anzeige.interactable = false;
-        }
-        else
-        {
-            Anzeige.interactable = true;
-        }
+        BikeInfo.text = bikes.ToString();        
+        showHideAnzeigeButton();
     }
 
+    private void showHideAnzeigeButton()
+    {
+        if (bikes % 2 == 0)
+            Anzeige.interactable = false;
+        else
+            Anzeige.interactable = true;
+    }
 }

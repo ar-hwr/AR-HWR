@@ -1646,7 +1646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1572114083786606029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3327,7 +3327,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bikes: 5
-  subwayMoves: 4
   PlayerName: 
   WhoseTurnIsIt: 
   PlayerPrefabs: []
