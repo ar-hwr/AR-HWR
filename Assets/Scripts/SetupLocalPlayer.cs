@@ -8,12 +8,22 @@ using UnityEngine.UI;
 public class SetupLocalPlayer : NetworkBehaviour
 {
     [SyncVar]
+    public int bikes = 5;
+
+
+    [SyncVar(hook = "OnSubwayChange")]
+    public int subwayMoves = 4;
+
+    [SyncVar]
     public string PlayerName;
 
+    [SyncVar(hook="OnWhoseTurnIsItChange")]
+    public String WhoseTurnIsIt;
 
     public static Dictionary<string, string> PlayerNamePlayerPosition = new Dictionary<string, string>();
+    public List<string> PlayerPrefabs = new List<string>();
 
-    [SyncVar]//(hook = "ActualizeDictionary")]
+    [SyncVar(hook="ActualizeDictionary")]
     public string SerializedDictionary;
 
     [HideInInspector]
@@ -30,8 +40,9 @@ public class SetupLocalPlayer : NetworkBehaviour
 
     //referencing UI
     public Text SubwayInfo;
-    public Text BikeInfo;
     public Text BusInfo;
+    public Text BikeInfo;
+    public Text TurnInfo;
     public Dropdown BusConnectionDropdown;
     public Dropdown BikeConnectionDropdown;
     public Dropdown SubwayConnectionDropdown;
@@ -45,15 +56,23 @@ public class SetupLocalPlayer : NetworkBehaviour
         Debug.Log(PlayerName);
         Debug.Log(SerializedDictionary);
 
+        PlayerNamePlayerPosition.Clear();
+        PlayerNamePlayerPosition = customDeserialize(SerializedDictionary);
+
         foreach (var player in PlayerNamePlayerPosition)
         {
             RenderPlayer(player);
             Debug.Log(player.Key + " " + player.Value);
+
+            PlayerPrefabs.Add(player.Key);
+
         }
 
+
+        WhoseTurnIsIt = PlayerPrefabs.First();
+        
+
         GetRequestHandler getRequestHandler = new GetRequestHandler();
-        //StartCoroutine(getRequestHandler.GetText2(SubwayInfo, result => UpdateUI(result)));
-        //StartCoroutine(getRequestHandler.GetText2(SubwayInfo, result => UpdateUI(result)));
         StartCoroutine(getRequestHandler.FetchResponseFromWeb(result => UpdateUI(result)));
     }
 
@@ -144,7 +163,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     void UpdateUI(Data data)
     {
         SubwayInfo.text = data.subway_tickets.ToString();
-        BikeInfo.text = data.bike_tickets.ToString();
+        //BikeInfo.text = data.bike_tickets.ToString();
         BusInfo.text = data.bus_tickets.ToString();
 
         var listOfBikeStations = new List<string>();
@@ -305,17 +324,16 @@ public class SetupLocalPlayer : NetworkBehaviour
 
     void ActualizeDictionary(string serializedDictionary)
     {
+        PlayerNamePlayerPosition.Clear();
+        PlayerNamePlayerPosition = customDeserialize(serializedDictionary);
+
         if (isServer)
         {
-            PlayerNamePlayerPosition.Clear();
-            PlayerNamePlayerPosition = customDeserialize(serializedDictionary);
             RpcActualizeDictionary(serializedDictionary);
         }
 
         if (isLocalPlayer)
         {
-            PlayerNamePlayerPosition.Clear();
-            PlayerNamePlayerPosition = customDeserialize(serializedDictionary);
             CmdActualizeDictionary(serializedDictionary);
         }
     }
@@ -348,8 +366,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     [Command]
     public void CmdActualizeDictionary(string serializedDict)
     {
-        PlayerNamePlayerPosition.Clear();
-        PlayerNamePlayerPosition = customDeserialize(serializedDict);
+        RpcActualizeDictionary(serializedDict);
     }
 
     [ClientRpc]
@@ -412,4 +429,229 @@ public class SetupLocalPlayer : NetworkBehaviour
         }
         return players;
     }
+
+    private void GetNextElement(string playerPrefab)
+    {
+        //ActualizeDictionary(SerializedDictionary);
+        //PlayerPrefabs.Clear();
+        //foreach (var player in PlayerNamePlayerPosition)
+        //{
+        //    PlayerPrefabs.Add(player.Key);
+        //}
+        var index = PlayerPrefabs.FindIndex(a => a == playerPrefab);
+
+        if ((index > PlayerPrefabs.Count - 1) || (index < 0))
+            throw new Exception("Invalid index");
+
+        else if (index == PlayerPrefabs.Count - 1)
+            index = 0;
+
+        else
+            index++;
+
+
+
+        WhoseTurnIsIt = PlayerPrefabs[index];
+
+
+        if (isServer)
+        {
+            RpcSetWhoseTurn(PlayerPrefabs[index]);
+        }
+
+        if (isLocalPlayer)
+        {
+            CmdSetWhoseTurn(PlayerPrefabs[index]);
+        }
+    }
+
+    [Command]
+    private void CmdSetWhoseTurn(string who)
+    {
+        RpcSetWhoseTurn(who);
+    }
+
+    [ClientRpc]
+    private void RpcSetWhoseTurn(string who)
+    {
+        WhoseTurnIsIt = who;
+    }
+
+
+    private void OnWhoseTurnIsItChange(string who)
+    {
+        TurnInfo.text = who;
+        if (isServer)
+        {
+            RpcRefreshView(who);
+        }
+
+        if (isLocalPlayer)
+        {
+            CmdRefreshView(who);
+        }
+    }
+
+    [Command]
+    private void CmdRefreshView(string text)
+    {
+        TurnInfo.text = text;
+        RpcRefreshView(text);
+    }
+
+    [ClientRpc]
+    private void RpcRefreshView(string text)
+    {
+        TurnInfo.text = text;
+    }
+
+
+    public void OnTestButtonClicked()
+    {
+        var whoseTurnThisRound = WhoseTurnIsIt;
+       
+
+        if (isServer)
+        {
+            GetNextElement(whoseTurnThisRound);
+            RpcGetNextElement(whoseTurnThisRound);
+        }
+
+        if (isLocalPlayer)
+        {
+            //GetNextElement(whoseTurnThisRound);
+            CmdGetNextElement(whoseTurnThisRound);
+        }
+    }
+
+
+    [Command]
+    private void CmdGetNextElement(string player)
+    {
+        GetNextElement(player);
+        RpcGetNextElement(player);
+    }
+
+    [ClientRpc]
+    private void RpcGetNextElement(string player)
+    {
+       GetNextElement(player);
+    }
+
+
+    private void DecrementSubwayMoves(int number)
+    {
+        subwayMoves -= number;
+    }
+
+    [Command]
+    private void CmdDecrementSubwayMoves(int number)
+    {
+        RpcDecrementSubwayMoves(number);
+    }
+
+    [ClientRpc]
+    private void RpcDecrementSubwayMoves(int number)
+    {
+        subwayMoves -= number;
+    }
+
+    private void OnSubwayChange(int number)
+    {
+        if (isServer)
+            SubwayInfo.text = number.ToString();
+
+        if (isLocalPlayer)
+            SubwayInfo.text = number.ToString();
+
+
+        SubwayInfo.text = number.ToString();
+
+        if (isServer)
+        {
+            SubwayInfo.text = number.ToString();
+            RpcSetDebugText(number.ToString());
+        }
+
+        if (isLocalPlayer)
+            CmdSetDebugText(number.ToString());
+
+    }
+
+
+    public void ClientTakeSubway()
+    {
+        var WhoseTurnThisRound = WhoseTurnIsIt;
+
+
+        if (isServer)
+        {
+            DecrementSubwayMoves(1);
+            RpcDecrementSubwayMoves(1);
+            //RpcGetNextElement(WhoseTurnThisRound);
+        }
+
+
+        if (isLocalPlayer)
+        {
+            DecrementSubwayMoves(1);
+            CmdDecrementSubwayMoves(1);
+
+            //GetNextElement(WhoseTurnThisRound);
+            //CmdGetNextElement(WhoseTurnThisRound);
+        }
+
+    }
+
+    [Command]
+    private void CmdSetDebugText(string text)
+    {
+        RpcSetDebugText(text);
+    }
+
+    [ClientRpc]
+    private void RpcSetDebugText(string text)
+    {
+        SubwayInfo.text = text;
+    }
+
+
+
+
+
+
+
+
+
+    public void ClickTest()
+    {
+        bikes++;
+        if (isServer)
+        {
+            BikeInfo.text = bikes.ToString();
+            RpcPrintVar(bikes.ToString());
+        }
+
+        if (isLocalPlayer)
+        {
+            BikeInfo.text = bikes.ToString();
+            CmdPrintVar(bikes.ToString());
+        }
+    }
+
+
+    [Command]
+    private void CmdPrintVar(string text)
+    {
+        BikeInfo.text = text;
+        RpcPrintVar(text);
+    }
+
+    [ClientRpc]
+    private void RpcPrintVar(string text)
+    {
+        bikes = Convert.ToInt32(text);
+        BikeInfo.text = bikes.ToString();
+    }
+
 }
