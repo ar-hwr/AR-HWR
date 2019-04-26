@@ -2578,7 +2578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &382561403
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4293,7 +4293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &564633199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7470,9 +7470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd541845cad4c438d856817e3ced3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bikes: 5
-  subwayMoves: 4
-  PlayerName: 
   WhoseTurnIsIt: 
   PlayerPrefabs: []
   SerializedDictionary: 
@@ -7488,7 +7485,6 @@ MonoBehaviour:
   TakeBus: {fileID: 0}
   TakeBike: {fileID: 0}
   TakeSubway: {fileID: 0}
-  Anzeige: {fileID: 0}
 --- !u!114 &854490749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10616,7 +10612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1334615683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10740,8 +10736,8 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &1346130779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12415,7 +12411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1553677568
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14355,16 +14351,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1874990636}
-    - target: {fileID: 314094644579368503, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
-        type: 3}
-      propertyPath: mTrackableName
-      value: Hohenzollernplatz
-      objectReference: {fileID: 0}
     - target: {fileID: 8300818713778795106, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1465385842}
+    - target: {fileID: 314094644579368503, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: mTrackableName
+      value: Hohenzollernplatz
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b, type: 3}
 --- !u!4 &1812885880 stripped

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
-    vuforiaLicenseKey: 
-    ufoLicenseKey: QVRFY2ZQci8vLy8vQUFBQUtPM2JVSVdJakV0WnBkYW96dmFvck9WQ1MrUXZlekFxaVFNM0tFclMzYXU2NFBPSUs3bTJ3bit4OWFvR3JMN2c5UTRmeWMzOUdPaFN0bGMwekM3US9qQ0NZcmV2NzVIN1NKcnVjRUU1TWVoM2svRG1PcmRmdXJ5UytkS3dpaDhHRW4zM05TRkcwRlBxU00zc2IwYjFqdkpPZlEzeFJha0dUT2JwSGlrbmtyUXlJbE1VVUU2N3crOUU0Z1NWRFJYOVdLc293eHo1bnE2NytsVWZhNUI4Qkc3OVNBekliRnZvWXErU0NYWjFsVEM4V01UbFd5VFYxYXBvUWVQZGhBVHFjZlpTM21KdlYyWVVkdXJleTlONjNmbUZBMEYyamowRUtVRi8rbXJWeDFBdlRJMzJTR1NMcXBpSDNRdGNsUkRURzJpTE5hdWVHd3BoY3cvQjB2SmpoY0g4aDBaSHlpbmhYdDNURDZYRVBJSUg=
+    vuforiaLicenseKey: AfEOwIX/////AAABmfiG5yD4k0vFhau16AnJgm58JpOAWZMXEJUA6cXqR7OQcSSJiZqbR3/FBuJfzZmGTw4hynBdbGKzwMnb52QFhqKUdpt423Hh5NtlCgQJYhrHxk7rKfiD4f/JVLTH6owt051W3a6O8Nt//Pq+pKUqJ8pPawSPsP5EptUziKT1EXC6C24yWKm4lV+DUOyvGiomSJLO+bu61LrWQ3YxYz3tfQ+zn3cKNSau5wQbJnF0x4lMVv0xtklN2O7HwhH3R3+oE067bJUgAFYuL6Ss3Mv3iZUkUJOp+4xPaOeL4BASQha3gGvTbgThm1ukStpcTLLbElcqZT1nu4FXGkFEKG7A5xpAi+tFhJuhrirVYE76SCv4
+    ufoLicenseKey: QVl3LzRNbi8vLy8vQUFBQUtFbVFmakY3Rmt0TXBNTEsvOHZ1UUhkd2k5R2p1Tjc1UW9mQWw3c3I4WU9WRFlXZ1FydlkvcDV2dkhqbXBCRWFkZzlTODZnNnNXdlpEdS8vNWVhdVZhY0Z2T0tZWjdvZmQwcGFsREdaWTc4VENEeTd2SXBzYzNXWWs2NGxFMVp1cWpLNy9YMVVWZkp2anNpWlY3WERIWnZXMm9rUSs0R1pWM1M5eGpaWGRIY01NYUlBbmowSkQwY0tHaFRVL1I1U2xJNHA1eTBZd28yaDZGc2lKVUczdXFCRE9md1lIY2xGQ2s4bXVycXZpODBTZE9jUjlkYjg5N3M1SlBtTWdTUHRCMS9hM3h5QWQwMDd3QTZLVDU0V1FFS1dvOTN0ZXRtVGM5S09pWFJIcllXbEFpQ1lHV0d4dlhFdWF1Q0RURG5ERkJWZlNHZktwQllKWE9qSWNaNXJZMkt0cFBrdjhRZ1Frc01zcHNTOERuMis=
     delayedInitialization: 0
     cameraDeviceModeSetting: -1
-    maxSimultaneousImageTargets: 1
+    maxSimultaneousImageTargets: 20
     maxSimultaneousObjectTargets: 1
     useDelayedLoadingObjectTargets: 0
     cameraDirection: 0
@@ -30,8 +30,8 @@ MonoBehaviour:
     eyewearType: 0
     stereoFramework: 0
     seeThroughConfiguration: 0
-    viewerName: 
-    viewerManufacturer: 
+    viewerName: Generic Cardboard
+    viewerManufacturer: Vuforia
     useCustomViewer: 0
     customViewer:
       Version: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
     autoInitTracker: 0
     autoStartTracker: 0
   webcam:
-    deviceNameSetInEditor: 
+    deviceNameSetInEditor: Microsoft Camera Rear
     flipHorizontally: 0
     turnOffWebCam: 0
     renderTextureLayer: 30

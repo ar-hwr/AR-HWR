@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Prototype.NetworkLobby;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+
+public class Player
+{
+    public string Name;
+    public Color Color;
+    public string Prefab;
+    public string Position;
+}
+
 public class SetupLocalPlayer : NetworkBehaviour
 {
-    [SyncVar]
-    public int bikes = 5;
-
-    [SyncVar]
-    public string PlayerName;
+    public List<Player> PlayerList = new List<Player>();
 
     [SyncVar]
     public string WhoseTurnIsIt;
@@ -43,115 +49,37 @@ public class SetupLocalPlayer : NetworkBehaviour
     public Button TakeBus;
     public Button TakeBike;
     public Button TakeSubway;
-    public Button Anzeige;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(PlayerName);
-        Debug.Log(SerializedDictionary);
-
-        PlayerNamePlayerPosition.Clear();
-        PlayerNamePlayerPosition = customDeserialize(SerializedDictionary);
-
-        foreach (var player in PlayerNamePlayerPosition)
+        foreach (var player in PlayerList)
         {
-            RenderPlayer(player);
-            Debug.Log(player.Key + " " + player.Value);
+            Debug.Log("\nCreated player with these attributes");
+            Debug.Log(player.Name);   
+            Debug.Log(player.Prefab); 
+            Debug.Log(player.Color);
+            Debug.Log(player.Position);   
 
-            PlayerPrefabs.Add(player.Key);
+
+            RenderPlayer(player);
         }
 
 
-        WhoseTurnIsIt = PlayerPrefabs.First();
-        TurnInfo.text = WhoseTurnIsIt;
+        //Debug.Log(SerializedDictionary);
+
+        //PlayerNamePlayerPosition.Clear();
+        //PlayerNamePlayerPosition = customDeserialize(SerializedDictionary);
+
+
+
+        //WhoseTurnIsIt = PlayerPrefabs.First();
+        //TurnInfo.text = WhoseTurnIsIt;
         
         GetRequestHandler getRequestHandler = new GetRequestHandler();
         StartCoroutine(getRequestHandler.FetchResponseFromWeb(result => UpdateUI(result)));
     }
 
-
-    //updating bus dropdown
-    [ClientRpc]
-    void RpcUpdateBusConnection(string option)
-    {
-        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
-    }
-
-    [Command]
-    void CmdUpdateBusConnection(string option)
-    {
-        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
-    }
-
-    //updating bike dropdown
-    [ClientRpc]
-    void RpcUpdateBikeConnection(string option)
-    {
-        BikeConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
-    }
-
-    [Command]
-    void CmdUpdateBikeConnection(string option)
-    {
-        BikeConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
-    }
-
-    //updating subway dropdown
-    [ClientRpc]
-    void RpcUpdateSubwayConnection(string option)
-    {
-        networkedUpdatedSubwayConnection(option);
-    }
-
-    [Command]
-    void CmdUpdateSubwayConnection(string option)
-    {
-        networkedUpdatedSubwayConnection(option);
-    }
-
-    private void networkedUpdatedSubwayConnection(string option)
-    {
-        SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = option });
-    }
-
-
-    [ClientRpc]
-    void RpcClearOptions(string nameOfDropdown)
-    {
-        networkedClearOptions(nameOfDropdown);
-    }
-
-    [Command]
-    void CmdClearOptions(string nameOfDropdown)
-    {
-        networkedClearOptions(nameOfDropdown);
-    }
-
-    private void networkedClearOptions(string nameOfDropdown)
-    {
-        GameObject.Find(nameOfDropdown).GetComponent<Dropdown>().ClearOptions();
-    }
-
-
-    [ClientRpc]
-    void RpcForceUpdate(string nameOfDropdown)
-    {
-        networedUpdate(nameOfDropdown);
-    }
-
-    [Command]
-    void CmdForceUpdate(string nameOfDropdown)
-    {
-        RpcForceUpdate(nameOfDropdown);
-    }
-
-    private void networedUpdate(string nameOfDropdown)
-    {
-        var dropdown = GameObject.Find(nameOfDropdown).GetComponent<Dropdown>();
-        dropdown.value = 1;
-        dropdown.value = 0;
-    }
 
 
     void UpdateUI(Data data)
@@ -190,31 +118,13 @@ public class SetupLocalPlayer : NetworkBehaviour
 
     private void AddOptionsToDropdown(List<string> stationListForSelectedVehicle, Dropdown dropDownForSelectedVehicle, Button takeVehicle)
     {      
-        FillDropdown(stationListForSelectedVehicle, takeVehicle, dropDownForSelectedVehicle);
-        if (isServer)
-        {
-            FillDropdown(stationListForSelectedVehicle, takeVehicle, dropDownForSelectedVehicle);
-            if (stationListForSelectedVehicle.Count != 0)
-            {
-                RpcForceUpdate(dropDownForSelectedVehicle.name);
-            }
-        }
-
-        if (isLocalPlayer)
-        {
-            FillDropdown(stationListForSelectedVehicle, takeVehicle, dropDownForSelectedVehicle);
-            if (stationListForSelectedVehicle.Count != 0)
-            {
-                CmdForceUpdate(dropDownForSelectedVehicle.name);
-            }
-        }
+        FillDropdown(stationListForSelectedVehicle, takeVehicle, dropDownForSelectedVehicle);        
     }
 
 
     private void FillDropdown(List<string> stationListForSelectedVehicle, Button takeVehicle, Dropdown dropDownForSelectedVehicle)
     {
-        //dropDownForSelectedVehicle.ClearOptions();
-        //CmdClearOptions(dropDownForSelectedVehicle.name);
+        dropDownForSelectedVehicle.ClearOptions();
 
         if (stationListForSelectedVehicle.Count == 0)
         {
@@ -228,13 +138,13 @@ public class SetupLocalPlayer : NetworkBehaviour
                 switch (dropDownForSelectedVehicle.name)
                 {
                     case "BusDropdown":
-                        CmdUpdateBusConnection(station);
+                        BusConnectionDropdown.options.Add(new Dropdown.OptionData() { text = station });
                         break;
                     case "BikeDropdown":
-                        CmdUpdateBikeConnection(station);
+                        BikeConnectionDropdown.options.Add(new Dropdown.OptionData() { text = station });
                         break;
                     case "SubwayDropdown":
-                        CmdUpdateSubwayConnection(station);
+                        SubwayConnectionDropdown.options.Add(new Dropdown.OptionData() { text = station });
                         break;
                     default:
                         break;
@@ -247,53 +157,35 @@ public class SetupLocalPlayer : NetworkBehaviour
         }
     }
 
-    void RenderPlayer(KeyValuePair<string, string> playerNamePlayerPosition, bool deleteFromScene = false)
+    void RenderPlayer(Player player, bool deleteFromScene = false)
     {
+        //first position then prefab
         if (isServer)
         {
             if (deleteFromScene)
             {
-                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
-                RpcHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+                GameObject.Find(player.Position + "/" + player.Prefab).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+                RpcHidePlayer(player);
             }
             else
             {
-                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                RpcRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+                GameObject.Find(player.Position + "/" + player.Prefab).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                RpcRenderPlayer(player);
             }
         }
 
-        try
-        {
-            if (deleteFromScene)
-            {
-                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key)
-                    .GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
-                CmdHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
-            }
-            else
-            {
-                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key)
-                    .GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.Log("is no local player");
-        }
 
         if (isLocalPlayer)
         {
             if (deleteFromScene)
             {
-                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
-                CmdHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+                GameObject.Find(player.Position + "/" + player.Prefab).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+                CmdRenderPlayer(player);
             }
             else
             {
-                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
+                GameObject.Find(player.Position + "/" + player.Prefab).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                CmdHidePlayer(player);
             }
         }
     }
@@ -302,54 +194,33 @@ public class SetupLocalPlayer : NetworkBehaviour
     {
         PlayerNamePlayerPosition.Clear();
         PlayerNamePlayerPosition = customDeserialize(serializedDictionary);
-
-        if (isServer)
-        {
-            RpcActualizeDictionary(serializedDictionary);
-        }
-
-        if (isLocalPlayer)
-        {
-            CmdActualizeDictionary(serializedDictionary);
-        }
     }
 
     [ClientRpc]
-    public void RpcRenderPlayer(string key, string value)
+    public void RpcRenderPlayer(Player player)
     {
-        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        GameObject.Find(player.Position + "/" + player.Prefab).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
     }
 
     [Command]
-    public void CmdRenderPlayer(string key, string value)
+    public void CmdRenderPlayer(Player player)
     {
-        RpcRenderPlayer(key, value);
+        RpcRenderPlayer(player);
     }
 
     [ClientRpc]
-    public void RpcHidePlayer(string key, string value)
+    public void RpcHidePlayer(Player player)
     {
-        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        GameObject.Find(player.Position + "/" + player.Prefab).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
     }
 
     [Command]
-    public void CmdHidePlayer(string key, string value)
+    public void CmdHidePlayer(Player player)
     {
-        RpcHidePlayer(key, value);
+        RpcHidePlayer(player);
     }
 
-    [Command]
-    public void CmdActualizeDictionary(string serializedDict)
-    {
-        RpcActualizeDictionary(serializedDict);
-    }
 
-    [ClientRpc]
-    public void RpcActualizeDictionary(string serializedDict)
-    {
-        PlayerNamePlayerPosition.Clear();
-        PlayerNamePlayerPosition = customDeserialize(serializedDict);
-    }
 
     public void OnTakeBus()
     {
@@ -369,15 +240,15 @@ public class SetupLocalPlayer : NetworkBehaviour
     public void OnTakeVehicle(string nameOfDropdown)
     {
         ActualizeDictionary(SerializedDictionary);
-        CalculateNextPlayer();
+        GetNextElement(WhoseTurnIsIt);
 
-        RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), true);
+        //RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), true);
         UIActualizer actualizer = new UIActualizer();
         actualizer.OnTakeVehicle(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), nameOfDropdown);
 
         SerializedDictionary = customSerialize(PlayerNamePlayerPosition);
         ActualizeDictionary(SerializedDictionary);
-        RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab));
+        //RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab));
     }
 
 
@@ -417,102 +288,7 @@ public class SetupLocalPlayer : NetworkBehaviour
         else
             index++;
 
-
         WhoseTurnIsIt = PlayerPrefabs[index];
-
-
-        if (isServer)
-        {
-            RpcSetWhoseTurn(WhoseTurnIsIt);
-        }
-
-        if (isLocalPlayer)
-        {
-            CmdSetWhoseTurn(WhoseTurnIsIt);
-        }
         TurnInfo.text = WhoseTurnIsIt;
-    }
-
-    [Command]
-    private void CmdSetWhoseTurn(string who)
-    {
-        RpcSetWhoseTurn(who);
-    }
-
-    [ClientRpc]
-    private void RpcSetWhoseTurn(string who)
-    {
-        WhoseTurnIsIt = who;
-    }
-
-    [Command]
-    private void CmdGetNextElement(string player)
-    {
-        GetNextElement(player);
-        RpcGetNextElement(player);
-    }
-
-    [ClientRpc]
-    private void RpcGetNextElement(string player)
-    {
-       GetNextElement(player);
-    }
-
-    public void CalculateNextPlayer()
-    {
-        var WhoseTurnThisRound = WhoseTurnIsIt;
-
-        if (isServer)
-        {
-            RpcGetNextElement(WhoseTurnThisRound);
-        }
-
-        if (isLocalPlayer)
-        {
-            GetNextElement(WhoseTurnThisRound);
-            CmdGetNextElement(WhoseTurnThisRound);
-        }
-    }
-
-    public void ClickTest()
-    {
-        bikes++;
-        if (isServer)
-        {
-            BikeInfo.text = bikes.ToString();
-            showHideAnzeigeButton();
-            RpcPrintVar(bikes.ToString());
-        }
-
-        if (isLocalPlayer)
-        {
-            BikeInfo.text = bikes.ToString();
-            showHideAnzeigeButton();
-            CmdPrintVar(bikes.ToString());
-        }
-    }
-
-    [Command]
-    private void CmdPrintVar(string text)
-    {
-        BikeInfo.text = text;
-        showHideAnzeigeButton();
-        RpcPrintVar(text);
-    }
-
-    [ClientRpc]
-    private void RpcPrintVar(string text)
-    {
-        bikes = Convert.ToInt32(text);
-        BikeInfo.text = bikes.ToString();        
-        showHideAnzeigeButton();
-    }
-
-    private void showHideAnzeigeButton()
-    {
-        if (bikes % 2 == 0)
-            Anzeige.interactable = false;
-        else
-            Anzeige.interactable = true;
-    }
+    }   
 }

@@ -1,6 +1,7 @@
 ﻿using Prototype.NetworkLobby;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -88,7 +89,7 @@ public class NetworkLobbyHook : LobbyHook
         SetupLocalPlayer localPlayer = gamePlayer.GetComponent<SetupLocalPlayer>();
 
         //mapping attributes from scene to scene
-        localPlayer.PlayerName = lobby.playerName;
+        //localPlayer.PlayerName = lobby.playerName;
         localPlayer.PlayerColor = lobby.playerColor;
         localPlayer.PlayerPrefab = playerColorPlayerName[lobby.playerColor];
    
@@ -106,6 +107,15 @@ public class NetworkLobbyHook : LobbyHook
 
 
         Debug.Log("Station is " + Stations[stationIndex]);
+
+        Player createdPlayer = new Player();
+        createdPlayer.Name = lobby.playerName;
+        createdPlayer.Color = lobby.playerColor;
+        createdPlayer.Prefab = playerColorPlayerName[lobby.playerColor];
+        Random rand = new Random();
+        int stIndex = random.Next(0, Stations.Count - 1);
+        createdPlayer.Position = Stations[stIndex];
+        localPlayer.PlayerList.Add(createdPlayer);
     }
 }
 
