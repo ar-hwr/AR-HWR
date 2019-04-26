@@ -17,7 +17,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     [SyncVar]
     public string PlayerName;
 
-    [SyncVar(hook="OnWhoseTurnIsItChange")]
+    [SyncVar]
     public String WhoseTurnIsIt;
 
     public static Dictionary<string, string> PlayerNamePlayerPosition = new Dictionary<string, string>();
@@ -49,6 +49,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     public Button TakeBus;
     public Button TakeBike;
     public Button TakeSubway;
+    public Button Anzeige;
 
     // Start is called before the first frame update
     void Start()
@@ -301,10 +302,12 @@ public class SetupLocalPlayer : NetworkBehaviour
         {
             if (deleteFromScene)
             {
+                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
                 RpcHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
             }
             else
             {
+                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 RpcRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
             }
         }
@@ -313,10 +316,12 @@ public class SetupLocalPlayer : NetworkBehaviour
         {
             if (deleteFromScene)
             {
+                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
                 CmdHidePlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
             }
             else
             {
+                GameObject.Find(playerNamePlayerPosition.Value + "/" + playerNamePlayerPosition.Key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 CmdRenderPlayer(playerNamePlayerPosition.Key, playerNamePlayerPosition.Value);
             }
         }
@@ -347,7 +352,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     [Command]
     public void CmdRenderPlayer(string key, string value)
     {
-        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        RpcRenderPlayer(key, value);
     }
 
 
@@ -360,7 +365,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     [Command]
     public void CmdHidePlayer(string key, string value)
     {
-        GameObject.Find(value + "/" + key).GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        RpcHidePlayer(key, value);
     }
 
     [Command]
@@ -385,6 +390,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     public void OnTakeBike()
     {
         OnTakeVehicle("BikeDropdown");
+      
     }
 
     public void OnTakeSubway()
@@ -396,6 +402,7 @@ public class SetupLocalPlayer : NetworkBehaviour
     public void OnTakeVehicle(string nameOfDropdown)
     {
         ActualizeDictionary(SerializedDictionary);
+        CalculateNextPlayer();
 
         RenderPlayer(PlayerNamePlayerPosition.SingleOrDefault(x => x.Key == PlayerPrefab), true);
         UIActualizer actualizer = new UIActualizer();
@@ -432,12 +439,6 @@ public class SetupLocalPlayer : NetworkBehaviour
 
     private void GetNextElement(string playerPrefab)
     {
-        //ActualizeDictionary(SerializedDictionary);
-        //PlayerPrefabs.Clear();
-        //foreach (var player in PlayerNamePlayerPosition)
-        //{
-        //    PlayerPrefabs.Add(player.Key);
-        //}
         var index = PlayerPrefabs.FindIndex(a => a == playerPrefab);
 
         if ((index > PlayerPrefabs.Count - 1) || (index < 0))
@@ -463,6 +464,10 @@ public class SetupLocalPlayer : NetworkBehaviour
         {
             CmdSetWhoseTurn(PlayerPrefabs[index]);
         }
+
+
+
+        TurnInfo.text = WhoseTurnIsIt;
     }
 
     [Command]
@@ -475,53 +480,6 @@ public class SetupLocalPlayer : NetworkBehaviour
     private void RpcSetWhoseTurn(string who)
     {
         WhoseTurnIsIt = who;
-    }
-
-
-    private void OnWhoseTurnIsItChange(string who)
-    {
-        TurnInfo.text = who;
-        if (isServer)
-        {
-            RpcRefreshView(who);
-        }
-
-        if (isLocalPlayer)
-        {
-            CmdRefreshView(who);
-        }
-    }
-
-    [Command]
-    private void CmdRefreshView(string text)
-    {
-        TurnInfo.text = text;
-        RpcRefreshView(text);
-    }
-
-    [ClientRpc]
-    private void RpcRefreshView(string text)
-    {
-        TurnInfo.text = text;
-    }
-
-
-    public void OnTestButtonClicked()
-    {
-        var whoseTurnThisRound = WhoseTurnIsIt;
-       
-
-        if (isServer)
-        {
-            GetNextElement(whoseTurnThisRound);
-            RpcGetNextElement(whoseTurnThisRound);
-        }
-
-        if (isLocalPlayer)
-        {
-            //GetNextElement(whoseTurnThisRound);
-            CmdGetNextElement(whoseTurnThisRound);
-        }
     }
 
 
@@ -579,26 +537,20 @@ public class SetupLocalPlayer : NetworkBehaviour
     }
 
 
-    public void ClientTakeSubway()
+    public void CalculateNextPlayer()
     {
         var WhoseTurnThisRound = WhoseTurnIsIt;
 
-
         if (isServer)
         {
-            DecrementSubwayMoves(1);
-            RpcDecrementSubwayMoves(1);
-            //RpcGetNextElement(WhoseTurnThisRound);
+            RpcGetNextElement(WhoseTurnThisRound);
         }
 
 
         if (isLocalPlayer)
         {
-            DecrementSubwayMoves(1);
-            CmdDecrementSubwayMoves(1);
-
-            //GetNextElement(WhoseTurnThisRound);
-            //CmdGetNextElement(WhoseTurnThisRound);
+            GetNextElement(WhoseTurnThisRound);
+            CmdGetNextElement(WhoseTurnThisRound);
         }
 
     }
@@ -629,12 +581,28 @@ public class SetupLocalPlayer : NetworkBehaviour
         if (isServer)
         {
             BikeInfo.text = bikes.ToString();
+            if (bikes % 2 == 0)
+            {
+                Anzeige.interactable = false;
+            }
+            else
+            {
+                Anzeige.interactable = true;
+            }
             RpcPrintVar(bikes.ToString());
         }
 
         if (isLocalPlayer)
         {
             BikeInfo.text = bikes.ToString();
+            if (bikes % 2 == 0)
+            {
+                Anzeige.interactable = false;
+            }
+            else
+            {
+                Anzeige.interactable = true;
+            }
             CmdPrintVar(bikes.ToString());
         }
     }
@@ -644,6 +612,14 @@ public class SetupLocalPlayer : NetworkBehaviour
     private void CmdPrintVar(string text)
     {
         BikeInfo.text = text;
+        if (bikes % 2 == 0)
+        {
+            Anzeige.interactable = false;
+        }
+        else
+        {
+            Anzeige.interactable = true;
+        }
         RpcPrintVar(text);
     }
 
@@ -652,6 +628,14 @@ public class SetupLocalPlayer : NetworkBehaviour
     {
         bikes = Convert.ToInt32(text);
         BikeInfo.text = bikes.ToString();
+        if (bikes % 2 == 0)
+        {
+            Anzeige.interactable = false;
+        }
+        else
+        {
+            Anzeige.interactable = true;
+        }
     }
 
 }

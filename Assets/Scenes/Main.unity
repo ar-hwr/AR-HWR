@@ -184,6 +184,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1725725980}
+    - target: {fileID: 8300818713778795106, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1051000088}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b, type: 3}
 --- !u!4 &4157435 stripped
@@ -7465,19 +7470,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd541845cad4c438d856817e3ced3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bikes: 5
+  subwayMoves: 4
   PlayerName: 
+  WhoseTurnIsIt: 
+  PlayerPrefabs: []
   SerializedDictionary: 
   PlayerColor: {r: 0, g: 0, b: 0, a: 0}
   PlayerPrefab: 
   SubwayInfo: {fileID: 0}
-  BikeInfo: {fileID: 0}
   BusInfo: {fileID: 0}
+  BikeInfo: {fileID: 0}
+  TurnInfo: {fileID: 0}
   BusConnectionDropdown: {fileID: 0}
   BikeConnectionDropdown: {fileID: 0}
   SubwayConnectionDropdown: {fileID: 0}
   TakeBus: {fileID: 0}
   TakeBike: {fileID: 0}
   TakeSubway: {fileID: 0}
+  Anzeige: {fileID: 0}
 --- !u!114 &854490749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8443,6 +8454,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034066632}
   m_CullTransparentMesh: 0
+--- !u!21 &1051000088
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'HohenzollerndammMaterial
+
+    -6438'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 6adf5a89f1ce4ee58c5beed99e059f77, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1 &1056479692
 GameObject:
   m_ObjectHideFlags: 0
@@ -10670,15 +10709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626bf35516bb60647b04241aef090e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SubwayInfo: {fileID: 1623467084}
-  BikeInfo: {fileID: 1630822375}
-  BusInfo: {fileID: 1034066634}
-  BusConnectionDropdown: {fileID: 673235668}
-  BikeConnectionDropdown: {fileID: 1875594759}
-  SubwayConnectionDropdown: {fileID: 1420416100}
-  TakeBus: {fileID: 382561404}
-  TakeBike: {fileID: 564633200}
-  TakeSubway: {fileID: 1553677569}
 --- !u!114 &1334615688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11709,6 +11739,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1463169990}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1465385842
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'HohenzollernplatzMaterial
+
+    -9490'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ab80a20f34844805aee4191fb8db7345, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
 --- !u!1001 &1475338795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14225,6 +14283,96 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1800200556}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1812885879
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1645069347769972637}
+    m_Modifications:
+    - target: {fileID: 4366765136082049969, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_Name
+      value: Hohenzollernplatz
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.3543
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.185
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4833593960269643972, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1874990636}
+    - target: {fileID: 314094644579368503, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: mTrackableName
+      value: Hohenzollernplatz
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300818713778795106, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1465385842}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b, type: 3}
+--- !u!4 &1812885880 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4983156481415312337, guid: 7f63c83af28ba984aa8b1a50b5d0bf0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1812885879}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1822791299
 Mesh:
   m_ObjectHideFlags: 0
@@ -14495,6 +14643,166 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &1874990636
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ImageTargetMesh-9442
+  serializedVersion: 9
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 6
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 4
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0, z: 0.5}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 000001000200020001000300
+  m_VertexData:
+    serializedVersion: 2
+    m_VertexCount: 4
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 128
+    _typelessdata: 000000bf00000000000000bf000000000000803f000000000000000000000000000000bf000000000000003f000000000000803f00000000000000000000803f0000003f00000000000000bf000000000000803f000000000000803f000000000000003f000000000000003f000000000000803f000000000000803f0000803f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0, z: 0.5}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimized: 0
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1875594757
 GameObject:
   m_ObjectHideFlags: 0
@@ -16668,6 +16976,7 @@ Transform:
   - {fileID: 1652612523}
   - {fileID: 2078261616}
   - {fileID: 797016802}
+  - {fileID: 1812885880}
   m_Father: {fileID: 1645069349173426787}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
