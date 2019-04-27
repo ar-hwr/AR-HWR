@@ -65,20 +65,25 @@ public class SetupLocalPlayer : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SubwayTicketsInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
-        BusTicketsInfo = GameObject.Find("BusTicketsInfo").GetComponent<Text>();
-        BikeTicketsInfo = GameObject.Find("BikeTicketsInfo").GetComponent<Text>();
-        //TurnInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
-        PlayerNameInfo = GameObject.Find("PlayerNameInfo").GetComponent<Text>();
-        PlayerColorInfo = GameObject.Find("PlayerColorInfo").GetComponent<Text>();
-        PlayerPrefabInfo = GameObject.Find("PlayerPrefabInfo").GetComponent<Text>();
-        PlayerPositionInfo = GameObject.Find("PlayerPositionInfo").GetComponent<Text>();
-        BusConnectionDropdown = GameObject.Find("BusConnectionsDropdown").GetComponent<Dropdown>();
-        BikeConnectionDropdown = GameObject.Find("BikeConnectionsDropdown").GetComponent<Dropdown>();
-        SubwayConnectionDropdown = GameObject.Find("SubwayConnectionsDropdown").GetComponent<Dropdown>();
-        TakeBus = GameObject.Find("BusButton").GetComponent<Button>();
-        TakeBike = GameObject.Find("BikeButton").GetComponent<Button>();
-        TakeSubway = GameObject.Find("SubwayButton").GetComponent<Button>();
+        //client has no menu
+        if (isServer)
+        {
+            SubwayTicketsInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
+            BusTicketsInfo = GameObject.Find("BusTicketsInfo").GetComponent<Text>();
+            BikeTicketsInfo = GameObject.Find("BikeTicketsInfo").GetComponent<Text>();
+            //TurnInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
+            PlayerNameInfo = GameObject.Find("PlayerNameInfo").GetComponent<Text>();
+            PlayerColorInfo = GameObject.Find("PlayerColorInfo").GetComponent<Text>();
+            PlayerPrefabInfo = GameObject.Find("PlayerPrefabInfo").GetComponent<Text>();
+            PlayerPositionInfo = GameObject.Find("PlayerPositionInfo").GetComponent<Text>();
+            BusConnectionDropdown = GameObject.Find("BusConnectionsDropdown").GetComponent<Dropdown>();
+            BikeConnectionDropdown = GameObject.Find("BikeConnectionsDropdown").GetComponent<Dropdown>();
+            SubwayConnectionDropdown = GameObject.Find("SubwayConnectionsDropdown").GetComponent<Dropdown>();
+            TakeBus = GameObject.Find("BusButton").GetComponent<Button>();
+            TakeBike = GameObject.Find("BikeButton").GetComponent<Button>();
+            TakeSubway = GameObject.Find("SubwayButton").GetComponent<Button>();
+
+        }
 
 
         foreach (var player in PlayerList)
@@ -95,9 +100,12 @@ public class SetupLocalPlayer : NetworkBehaviour
 
 
 
+        if (isServer)
+        {
+            PlayerIndex = 0;
+            ShowPlayerData();
+        }
 
-        PlayerIndex = 0;
-        ShowPlayerData();
 
         //Debug.Log(SerializedDictionary);
 
@@ -109,30 +117,28 @@ public class SetupLocalPlayer : NetworkBehaviour
         //WhoseTurnIsIt = PlayerPrefabs.First();
         //TurnInfo.text = WhoseTurnIsIt;
 
-        GetRequestHandler getRequestHandler = new GetRequestHandler();
-        StartCoroutine(getRequestHandler.FetchResponseFromWeb(result => UpdateUI(result)));
+
+        if (isServer)
+        {
+            GetRequestHandler getRequestHandler = new GetRequestHandler();
+            StartCoroutine(getRequestHandler.FetchResponseFromWeb(result => UpdateUI(result)));
+        }
+
     }
 
     public void ShowPlayerData()
     {
         var pl = PlayerList.ElementAt(PlayerIndex);
 
-        SubwayTicketsInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
-        BusTicketsInfo = GameObject.Find("BusTicketsInfo").GetComponent<Text>();
-        BikeTicketsInfo = GameObject.Find("BikeTicketsInfo").GetComponent<Text>();
+        GameObject.Find("SubwayTicketsInfo").GetComponent<Text>().text = pl.SubwayTickets.ToString();
+        GameObject.Find("BusTicketsInfo").GetComponent<Text>().text = pl.BusTickets.ToString();
+        GameObject.Find("BikeTicketsInfo").GetComponent<Text>().text = pl.BikeTickets.ToString();
         //TurnInfo = GameObject.Find("SubwayTicketsInfo").GetComponent<Text>();
-        PlayerNameInfo = GameObject.Find("PlayerNameInfo").GetComponent<Text>();
-        PlayerColorInfo = GameObject.Find("PlayerColorInfo").GetComponent<Text>();
-        PlayerPrefabInfo = GameObject.Find("PlayerPrefabInfo").GetComponent<Text>();
-        PlayerPositionInfo = GameObject.Find("PlayerPositionInfo").GetComponent<Text>();
+        GameObject.Find("PlayerNameInfo").GetComponent<Text>().text = pl.Name;
+        GameObject.Find("PlayerColorInfo").GetComponent<Text>().text = pl.Color.ToString();
+        GameObject.Find("PlayerPrefabInfo").GetComponent<Text>().text = pl.Prefab;
+        GameObject.Find("PlayerPositionInfo").GetComponent<Text>().text = pl.Position;
 
-        PlayerNameInfo.text = pl.Name;
-        PlayerColorInfo.text = pl.Color.ToString();
-        PlayerPrefabInfo.text = pl.Prefab;
-        PlayerPositionInfo.text = pl.Position;
-        SubwayTicketsInfo.text = pl.SubwayTickets.ToString();
-        BusTicketsInfo.text = pl.BusTickets.ToString();
-        BikeTicketsInfo.text = pl.BikeTickets.ToString();
     }
 
     public void OnNextPlayer()

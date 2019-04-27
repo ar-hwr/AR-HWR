@@ -3310,32 +3310,7 @@ MonoBehaviour:
   PlayerColor: {r: 0, g: 0, b: 0, a: 0}
   PlayerPrefab: 
   PlayerIndex: 0
-  SubwayTicketsInfo: {fileID: 5795879571487930259, guid: 537bd397756d6d74099815d03040651d,
-    type: 3}
-  BusTicketsInfo: {fileID: 4304082655229208158, guid: d57006fdca311c44888608ff79559035,
-    type: 3}
-  BikeTicketsInfo: {fileID: 2458042097957945922, guid: b1c2fdf44bce0c24fa5657629eeabab0,
-    type: 3}
   TurnInfo: {fileID: 5953341310135405100}
-  PlayerNameInfo: {fileID: 226600861618594386, guid: db9c575cda6ce214e953b44376e531c9,
-    type: 3}
-  PlayerColorInfo: {fileID: 8981436912606540309, guid: 8aadea98ae42c724f9eba6d246b50e95,
-    type: 3}
-  PlayerPrefabInfo: {fileID: 8633770584015213107, guid: be8878e62fb1ae442bcf7582a5d830ff,
-    type: 3}
-  PlayerPositionInfo: {fileID: 4922196593295344113, guid: 854b5dcfe19f7b54a9697002f06e5558,
-    type: 3}
-  BusConnectionDropdown: {fileID: 8867576624729550139, guid: 6fd0cf20bc66706419ee72686c7d76fd,
-    type: 3}
-  BikeConnectionDropdown: {fileID: 5193638556539886447, guid: 7cbf74dc296087b48a45ae01bdcd8205,
-    type: 3}
-  SubwayConnectionDropdown: {fileID: 4372048898911551099, guid: 57daa895cc9ac444b9002eaa39dde484,
-    type: 3}
-  TakeBus: {fileID: 7126910295218040491, guid: fd607a4f3d799f64aadb75c022e7670e, type: 3}
-  TakeBike: {fileID: 2716849952441201212, guid: 757c9f8b8b3c27d49ba5beeba3e1d811,
-    type: 3}
-  TakeSubway: {fileID: 5892209844175842083, guid: 5f015129ac8173a40838bb5e9981705e,
-    type: 3}
 --- !u!1 &4088254122815023845
 GameObject:
   m_ObjectHideFlags: 0
