@@ -5,8 +5,7 @@ using UnityEngine;
 public class GetRequestHandler : MonoBehaviour
 {
     // set server url of custom API here
-    private string serverURL2 = "http://finalnothing.net:9292/players/2";
-    private string serverURL1 = "http://finalnothing.net:9292/players/1";
+    private string urlPartOne = "http://finalnothing.net:9292/matches/ID?match_name=";
 
     /// <summary>
     /// Simple get request to server
@@ -15,12 +14,14 @@ public class GetRequestHandler : MonoBehaviour
     /// <returns></returns>
     public IEnumerator FetchResponseFromWeb(string url, Action<MatchData> callback)
     {
-        WWW www = new WWW(url);
+        WWW www = new WWW(urlPartOne + url);
         yield return www;
 
         if (www.error != null)
         {
-            callback(new MatchData());
+            MatchData matchData = new MatchData();
+            matchData.state = "404";
+            callback(matchData);
         }
         else
         {

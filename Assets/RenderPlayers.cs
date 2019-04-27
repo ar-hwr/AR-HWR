@@ -34,13 +34,6 @@ public class PlayerInGame
     public string position_name;
 }
 
-public class PlayerPosition
-{
-    public string prefab;
-    public string position;
-}
-
-
 public class RenderPlayers : MonoBehaviour
 {
     //private List<PlayerPosition> playersToRender = new List<PlayerPosition>();
@@ -49,6 +42,8 @@ public class RenderPlayers : MonoBehaviour
     private Dictionary<string, string> playersToRender = new Dictionary<string, string>();
     private Dictionary<string, string> playersToRenderInRoundBefore = new Dictionary<string, string>();
     GetRequestHandler getRequestHandler = new GetRequestHandler();
+
+    public static string gameName = String.Empty;
 
     // Start is called before the first frame update
     void Start()
@@ -77,12 +72,13 @@ public class RenderPlayers : MonoBehaviour
 
     void RefreshServerData()
     {
-        StartCoroutine(getRequestHandler.FetchResponseFromWeb("http://finalnothing.net:9292/matches/ID?match_name=SamstagNachmittag2", result => RenderPlayer(result)));
-
+        StartCoroutine(getRequestHandler.FetchResponseFromWeb(gameName, result => RenderPlayer(result)));
     }
 
     void RenderPlayer(MatchData matchData)
     {
+        //handle 404
+
         playersToRender.Clear();
 
         foreach (var player in matchData.players)
