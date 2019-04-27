@@ -742,7 +742,7 @@ namespace UnityGLTF
                     var uri = image.Uri;
 
                     Regex regex = new Regex(Base64StringInitializer);
-                    Match match = regex.Match(uri);
+                    System.Text.RegularExpressions.Match match = regex.Match(uri);
                     if (match.Success)
                     {
                         var base64Data = uri.Substring(match.Length);
@@ -817,7 +817,7 @@ namespace UnityGLTF
                 var uri = buffer.Uri;
 
                 Regex regex = new Regex(Base64StringInitializer);
-                Match match = regex.Match(uri);
+                System.Text.RegularExpressions.Match match = regex.Match(uri);
                 if (match.Success)
                 {
                     string base64String = uri.Substring(match.Length);

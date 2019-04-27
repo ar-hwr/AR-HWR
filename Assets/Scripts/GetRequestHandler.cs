@@ -13,18 +13,18 @@ public class GetRequestHandler : MonoBehaviour
     /// </summary>
     /// <param name="callback">What to do with the requests answer</param>
     /// <returns></returns>
-    public IEnumerator FetchResponseFromWeb(Action<Data> callback)
+    public IEnumerator FetchResponseFromWeb(string url, Action<MatchData> callback)
     {
-        WWW www = new WWW(serverURL2);
+        WWW www = new WWW(url);
         yield return www;
 
         if (www.error != null)
         {
-            callback(new Data());
+            callback(new MatchData());
         }
         else
         {
-            callback(JsonUtility.FromJson<Data>(www.text));
+            callback(JsonUtility.FromJson<MatchData>(www.text));
         }
     }
 }

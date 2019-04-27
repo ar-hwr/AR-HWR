@@ -71,7 +71,7 @@ namespace HoloToolkit.Unity
                 else if (node.Attributes["Condition"] != null)
                 {
                     // Update the DefineConstants to include the configuration allowing us to conditionally compile code based on the configuration.
-                    Match match = PlatformRegex.Match(node.Attributes["Condition"].InnerText);
+                    System.Text.RegularExpressions.Match match = PlatformRegex.Match(node.Attributes["Condition"].InnerText);
 
                     if (match.Success)
                     {
