@@ -25,7 +25,6 @@ public class StartViewing : MonoBehaviour
         ThiefWonPanel = GameObject.Find("ThiefWonPanel");
 
         PopUpPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
-        PoliceWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
         InGamePanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
         PoliceWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
         ThiefWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
@@ -79,7 +78,8 @@ public class StartViewing : MonoBehaviour
 
     public void OnLeaveGame()
     {
-        SceneManager.LoadScene("Main");
+        //SceneManager.LoadScene("Main");
+        Application.Quit();
     }
 
     public void OnConfirmButtonClicked()
