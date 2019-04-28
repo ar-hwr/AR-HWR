@@ -3,24 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartViewing : MonoBehaviour
 {
     public TMP_InputField InputGameName;
-    public GameObject HeadingSubPanel;
-    public GameObject PopUpPanel;
+    public static GameObject HeadingSubPanel;
+    public static GameObject PopUpPanel;
+    public static GameObject InGamePanel;
+    public static GameObject PoliceWonPanel;
+    public static GameObject ThiefWonPanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        HeadingSubPanel = GameObject.Find("HeadingSubPanel");
+        PopUpPanel = GameObject.Find("PopUpPanel");
+        InGamePanel = GameObject.Find("InGamePanel");
+        PoliceWonPanel = GameObject.Find("PoliceWonPanel");
+        ThiefWonPanel = GameObject.Find("ThiefWonPanel");
+
+        PopUpPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        PoliceWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        InGamePanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        PoliceWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        ThiefWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnViewButtonClicked()
@@ -32,7 +46,7 @@ public class StartViewing : MonoBehaviour
             GetRequestHandler getRequestHandler = new GetRequestHandler();
             StartCoroutine(getRequestHandler.FetchResponseFromWeb(
                 InputGameName.text,
-                result => TryStartViewing(result)));          
+                result => TryStartViewing(result)));
         }
     }
 
@@ -40,19 +54,38 @@ public class StartViewing : MonoBehaviour
     {
         if (matchData.state == "404")
         {
-            HeadingSubPanel.SetActive(false);
-            PopUpPanel.SetActive(true);
+            HeadingSubPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+            PopUpPanel.GetComponent<RectTransform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
         else
         {
-            HeadingSubPanel.SetActive(false);
-        }    
+            HeadingSubPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+            InGamePanel.GetComponent<RectTransform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+    }
+
+    public void OnPoliceWon()
+    {
+
+        InGamePanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        PoliceWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
+    }
+
+    public void OnThiefWon()
+    {
+        InGamePanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        ThiefWonPanel.GetComponent<RectTransform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
+    }
+
+    public void OnLeaveGame()
+    {
+        SceneManager.LoadScene("Main");
     }
 
     public void OnConfirmButtonClicked()
     {
-        PopUpPanel.SetActive(false);
-        HeadingSubPanel.SetActive(true);
+        PopUpPanel.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        HeadingSubPanel.GetComponent<RectTransform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
         InputGameName.text = String.Empty;
     }
 
